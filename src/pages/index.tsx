@@ -1,3 +1,3 @@
 export default function Home() {
-   return <div>Dian Project</div>
+   return <div className="text-5xl">Dian Project</div>
 }
