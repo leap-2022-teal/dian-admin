@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import { Category } from '../../../components/categoiry';
-export function Header() {
+import { Category } from '../../components/categoiry';
+export default function Home() {
   const [show, setShow] = useState(false);
   const [profile, setProfile] = useState(false);
   const [menu, setMenu] = useState(false);
