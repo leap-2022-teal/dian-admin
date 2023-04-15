@@ -1,5 +1,6 @@
 import { useState } from 'react';
-import { Category } from '../../components/categoiry';
+import { Category } from '../../components/categories';
+import { Product } from '../../components/products';
 export default function Home() {
   const [show, setShow] = useState(false);
   const [profile, setProfile] = useState(false);
@@ -13,7 +14,7 @@ export default function Home() {
       <div className="w-full h-full bg-gray-200">
         <div className="flex flex-no-wrap">
           {/* Sidebar starts */}
-          <div className="absolute lg:relative w-64 h-screen shadow bg-gray-100 hidden lg:block">
+          <div className="absolute lg:relative w-64 shadow bg-gray-100 hidden lg:block">
             <div className="h-16 w-full flex items-center px-10">
               <svg xmlns="http://www.w3.org/2000/svg" width={144} height={30} viewBox="0 0 144 30">
                 <path
@@ -23,92 +24,40 @@ export default function Home() {
               </svg>
             </div>
             <ul aria-orientation="vertical" className=" py-6">
-              <li className="pl-6 cursor-pointer text-white text-sm leading-3 tracking-normal pb-4 pt-5 focus:text-indigo-700 focus:outline-none">
+              <li className="pl-6 cursor-pointer text-gray-600 text-sm leading-3 tracking-normal pb-4 pt-5 hover:text-indigo-700 focus:text-indigo-700 focus:outline-none">
                 <div className="flex items-center">
                   <div>
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      className="icon icon-tabler icon-tabler-grid"
-                      width={20}
-                      height={20}
-                      viewBox="0 0 24 24"
-                      strokeWidth="1.5"
-                      stroke="currentColor"
-                      fill="none"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    >
-                      <path stroke="none" d="M0 0h24v24H0z" />
-                      <rect x={4} y={4} width={6} height={6} rx={1} />
-                      <rect x={14} y={4} width={6} height={6} rx={1} />
-                      <rect x={4} y={14} width={6} height={6} rx={1} />
-                      <rect x={14} y={14} width={6} height={6} rx={1} />
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-6 h-6">
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        d="M2.25 12l8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25"
+                      />
                     </svg>
                   </div>
-                  <span className="ml-2">Dashboard</span>
+                  <span className="ml-2">Эхлэл</span>
                 </div>
               </li>
               <li className="pl-6 cursor-pointer text-gray-600 text-sm leading-3 tracking-normal mt-4 mb-4 py-2 hover:text-indigo-700 focus:text-indigo-700 focus:outline-none">
                 <div className="flex items-center">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="icon icon-tabler icon-tabler-puzzle"
-                    width={20}
-                    height={20}
-                    viewBox="0 0 24 24"
-                    strokeWidth="1.5"
-                    stroke="currentColor"
-                    fill="none"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  >
-                    <path stroke="none" d="M0 0h24v24H0z" />
-                    <path d="M4 7h3a1 1 0 0 0 1 -1v-1a2 2 0 0 1 4 0v1a1 1 0 0 0 1 1h3a1 1 0 0 1 1 1v3a1 1 0 0 0 1 1h1a2 2 0 0 1 0 4h-1a1 1 0 0 0 -1 1v3a1 1 0 0 1 -1 1h-3a1 1 0 0 1 -1 -1v-1a2 2 0 0 0 -4 0v1a1 1 0 0 1 -1 1h-3a1 1 0 0 1 -1 -1v-3a1 1 0 0 1 1 -1h1a2 2 0 0 0 0 -4h-1a1 1 0 0 1 -1 -1v-3a1 1 0 0 1 1 -1" />
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-6 h-6">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M21 7.5l-9-5.25L3 7.5m18 0l-9 5.25m9-5.25v9l-9 5.25M3 7.5l9 5.25M3 7.5v9l9 5.25m0-9v9" />
                   </svg>
-                  <span className="ml-2">Products</span>
+
+                  <span className="ml-2">Бараа бүтээгдэхүүн</span>
                 </div>
               </li>
               <li className="pl-6 cursor-pointer text-gray-600 text-sm leading-3 tracking-normal mb-4 py-2 hover:text-indigo-700 focus:text-indigo-700 focus:outline-none">
                 <div className="flex items-center">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="icon icon-tabler icon-tabler-compass"
-                    width={20}
-                    height={20}
-                    viewBox="0 0 24 24"
-                    strokeWidth="1.5"
-                    stroke="currentColor"
-                    fill="none"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  >
-                    <path stroke="none" d="M0 0h24v24H0z" />
-                    <polyline points="8 16 10 10 16 8 14 14 8 16" />
-                    <circle cx={12} cy={12} r={9} />
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-6 h-6">
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M12 3c2.755 0 5.455.232 8.083.678.533.09.917.556.917 1.096v1.044a2.25 2.25 0 01-.659 1.591l-5.432 5.432a2.25 2.25 0 00-.659 1.591v2.927a2.25 2.25 0 01-1.244 2.013L9.75 21v-6.568a2.25 2.25 0 00-.659-1.591L3.659 7.409A2.25 2.25 0 013 5.818V4.774c0-.54.384-1.006.917-1.096A48.32 48.32 0 0112 3z"
+                    />
                   </svg>
-                  <span className="ml-2">Performance</span>
-                </div>
-              </li>
-              <li className="pl-6 cursor-pointer text-gray-600 text-sm leading-3 tracking-normal py-2 hover:text-indigo-700 focus:text-indigo-700 focus:outline-none">
-                <div className="flex items-center">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="icon icon-tabler icon-tabler-code"
-                    width={20}
-                    height={20}
-                    viewBox="0 0 24 24"
-                    strokeWidth="1.5"
-                    stroke="currentColor"
-                    fill="none"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  >
-                    <path stroke="none" d="M0 0h24v24H0z" />
-                    <polyline points="7 8 3 12 7 16" />
-                    <polyline points="17 8 21 12 17 16" />
-                    <line x1={14} y1={4} x2={10} y2={20} />
-                  </svg>
-                  <span className="ml-2">Deliverables</span>
+
+                  <span className="ml-2">Ангилал</span>
                 </div>
               </li>
             </ul>
@@ -483,12 +432,11 @@ export default function Home() {
                 )}
               </div>
             </nav>
-            {/* Navigation ends */}
-            {/* Remove class [ h-64 ] when adding a card block */}
-            <div className="container mx-auto py-10 h-64 md:w-4/5 w-11/12 px-6">
-              {/* Remove class [ border-dashed border-2 border-gray-300 ] to remove dotted border */}
-              <div className="w-full h-full rounded border-dashed border-2 border-gray-300">
+
+            <div className="container mx-auto py-10 md:w-4/5 w-11/12 px-6">
+              <div className="flex">
                 <Category />
+                <Product />
               </div>
             </div>
           </div>
