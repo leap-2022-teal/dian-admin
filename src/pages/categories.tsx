@@ -11,11 +11,17 @@ export default function Category(props: any) {
 
   return (
     <Home>
-      <div>
-        {categories?.map((category: any) => (
-          <div key={category._id}>{category.title}</div>
-        ))}
-      </div>
+      {categories?.map((category: any) => {
+        return (
+          <div key={category._id} className="flex">
+            <div>{category.title}</div>
+            <div className="flex">
+              <button onClick={() => {}}>Edit</button>
+              <button onClick={() => {}}>Delete</button>
+            </div>
+          </div>
+        );
+      })}
     </Home>
   );
 }
