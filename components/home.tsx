@@ -1,7 +1,6 @@
+import Link from 'next/link';
 import { useState } from 'react';
-import { Category } from '../../components/categories';
-import { Product } from '../../components/products';
-export default function Home() {
+export default function Home({ children }: any) {
   const [show, setShow] = useState(false);
   const [profile, setProfile] = useState(false);
   const [menu, setMenu] = useState(false);
@@ -24,7 +23,8 @@ export default function Home() {
               </svg>
             </div>
             <ul aria-orientation="vertical" className=" py-6">
-              <li className="pl-6 cursor-pointer text-gray-600 text-sm leading-3 tracking-normal pb-4 pt-5 hover:text-indigo-700 focus:text-indigo-700 focus:outline-none">
+              <Link href={"/"}>
+                   <li className="pl-6 cursor-pointer text-gray-600 text-sm leading-3 tracking-normal pb-4 pt-5 hover:text-indigo-700 focus:text-indigo-700 focus:outline-none">
                 <div className="flex items-center">
                   <div>
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-6 h-6">
@@ -38,28 +38,36 @@ export default function Home() {
                   <span className="ml-2">Эхлэл</span>
                 </div>
               </li>
-              <li className="pl-6 cursor-pointer text-gray-600 text-sm leading-3 tracking-normal mt-4 mb-4 py-2 hover:text-indigo-700 focus:text-indigo-700 focus:outline-none">
-                <div className="flex items-center">
-                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-6 h-6">
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M21 7.5l-9-5.25L3 7.5m18 0l-9 5.25m9-5.25v9l-9 5.25M3 7.5l9 5.25M3 7.5v9l9 5.25m0-9v9" />
-                  </svg>
+              </Link>
+         
 
-                  <span className="ml-2">Бараа бүтээгдэхүүн</span>
-                </div>
-              </li>
-              <li className="pl-6 cursor-pointer text-gray-600 text-sm leading-3 tracking-normal mb-4 py-2 hover:text-indigo-700 focus:text-indigo-700 focus:outline-none">
-                <div className="flex items-center">
-                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-6 h-6">
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      d="M12 3c2.755 0 5.455.232 8.083.678.533.09.917.556.917 1.096v1.044a2.25 2.25 0 01-.659 1.591l-5.432 5.432a2.25 2.25 0 00-.659 1.591v2.927a2.25 2.25 0 01-1.244 2.013L9.75 21v-6.568a2.25 2.25 0 00-.659-1.591L3.659 7.409A2.25 2.25 0 013 5.818V4.774c0-.54.384-1.006.917-1.096A48.32 48.32 0 0112 3z"
-                    />
-                  </svg>
+              <Link href={'/products'}>
+                <li className="pl-6 cursor-pointer text-gray-600 text-sm leading-3 tracking-normal mt-4 mb-4 py-2 hover:text-indigo-700 focus:text-indigo-700 focus:outline-none">
+                  <div className="flex items-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-6 h-6">
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M21 7.5l-9-5.25L3 7.5m18 0l-9 5.25m9-5.25v9l-9 5.25M3 7.5l9 5.25M3 7.5v9l9 5.25m0-9v9" />
+                    </svg>
 
-                  <span className="ml-2">Ангилал</span>
-                </div>
-              </li>
+                    <span className="ml-2">Бараа бүтээгдэхүүн</span>
+                  </div>
+                </li>
+              </Link>
+
+              <Link href={'/categories'}>
+                <li className="pl-6 cursor-pointer text-gray-600 text-sm leading-3 tracking-normal mb-4 py-2 hover:text-indigo-700 focus:text-indigo-700 focus:outline-none">
+                  <div className="flex items-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-6 h-6">
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        d="M12 3c2.755 0 5.455.232 8.083.678.533.09.917.556.917 1.096v1.044a2.25 2.25 0 01-.659 1.591l-5.432 5.432a2.25 2.25 0 00-.659 1.591v2.927a2.25 2.25 0 01-1.244 2.013L9.75 21v-6.568a2.25 2.25 0 00-.659-1.591L3.659 7.409A2.25 2.25 0 013 5.818V4.774c0-.54.384-1.006.917-1.096A48.32 48.32 0 0112 3z"
+                      />
+                    </svg>
+
+                    <span className="ml-2">Ангилал</span>
+                  </div>
+                </li>
+              </Link>
             </ul>
           </div>
           {/*Mobile responsive sidebar*/}
@@ -433,12 +441,7 @@ export default function Home() {
               </div>
             </nav>
 
-            <div className="container mx-auto py-10 md:w-4/5 w-11/12 px-6">
-              <div className="flex">
-                <Category />
-                <Product />
-              </div>
-            </div>
+            <div>{children}</div>
           </div>
         </div>
       </div>
