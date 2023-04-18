@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import Home from '../../components/home';
 import { fetcher } from '../../utils/fetcher';
+import { CategoriesNew } from '../../components/categoriesNew';
 
 export default function Category(props: any) {
   const [categories, setCategories] = useState(props.categories);
@@ -11,11 +12,18 @@ export default function Category(props: any) {
 
   return (
     <Home>
-      <div>
-        {categories?.map((category: any) => (
-          <div key={category._id}>{category.title}</div>
-        ))}
-      </div>
+      <CategoriesNew />
+      {categories?.map((category: any) => {
+        return (
+          <div key={category._id} className="flex">
+            <div>{category.title}</div>
+            <div className="flex">
+              <button onClick={() => {}}>Edit</button>
+              <button onClick={() => {}}>Delete</button>
+            </div>
+          </div>
+        );
+      })}
     </Home>
   );
 }
