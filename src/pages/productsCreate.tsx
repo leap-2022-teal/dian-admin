@@ -1,55 +1,51 @@
-import { useState } from 'react';
-import Home from '../../components/home';
-
+import { useEffect, useState } from 'react';
+import AsyncSelect from 'react-select/async';
 import CreatableSelect from 'react-select/creatable';
-import CKeditor from '../../components/CKeditor';
-const options = [
-  { value: 'chocolate', label: 'Chocolate' },
-  { value: 'strawberry', label: 'Strawberry' },
-  { value: 'vanilla', label: 'Vanilla' },
-];
+import Home from '../../components/home';
+import { fetcher } from '../../utils/fetcher';
+
+// import CKeditor from '../../components/CKeditor';
+
 function productsCreate(props: any) {
-  const [content, setContent] = useState();
+  const [categories, setCategories] = useState(props.categories);
 
-  // function submit() {
-  //   axios
-  //     .post(`${process.env.REACT_APP_API_URL}/articles`, {
-  //       content,
-  //     })
-  //     .then((res: any) => {
-  //       const { status } = res;
-  //       if (status === 201) {
-  //         alert('Success');
-  //       }
-  //     });
-  // }
+  useEffect(() => {
+    fetcher(`categories`).then((data) => setCategories(data));
+  }, []);
+  // categories?.map((category: any) => {
+  //   const options = [{ value: category._id, label: category.title }];
+  // });
 
+  const categoriesList = categories?.map((category: any) => {
+    return { value: category._id, label: category.title };
+  });
+  const filterColors = (inputValue: string) => {
+    return categories
+      ?.map((category: any) => {
+        return { value: category._id, label: category.title };
+      })
+      .filter((i: any) => i.label.toLowerCase().includes(inputValue.toLowerCase()));
+  };
+  // let CategoryOption = [];
+  const promiseOptions = (inputValue: string) =>
+    new Promise<any>((resolve) => {
+      setTimeout(() => {
+        resolve(filterColors(inputValue));
+      }, 400);
+    });
   return (
     <Home>
       <label htmlFor="">title</label>
-      <input></input>
-      <CreatableSelect isClearable options={options} />
-      <CreatableSelect isClearable options={options} />
-
-      <div className="">
-        <CKeditor
-          onChange={function (data: string): void {
-            throw new Error('Function not implemented.');
-          }}
-          editorLoaded={false}
-          name={''}
-          value={''}
-        />
-        {/* <CKEditor
-          // editor={ClassicEditor}
-          // data={content}
-          // onChange={handleEdit}
-          // onChange={(event, editor) => {
-          //   const data = editor.getData();
-          // }}
-        /> */}
-        {/* <button onClick={submit}>Хадгалах</button> */}
-      </div>
+      <input type="text"></input>
+      <CreatableSelect
+        isClearable
+        options={categories?.map((category: any) => {
+          return { value: category._id, label: category.title };
+        })}
+      />
+      <AsyncSelect cacheOptions defaultOptions={categoriesList} loadOptions={promiseOptions} />
+      <input type="file"></input>
+      <input type="number"></input>
     </Home>
   );
 }
