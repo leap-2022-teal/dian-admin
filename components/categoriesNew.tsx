@@ -1,8 +1,7 @@
-import { fetcher } from '../utils/fetcher';
-import { useEffect, useState } from 'react';
-import axios from 'axios';
+import { fetcherPost } from '../utils/fetcher';
+import { useState } from 'react';
 
-export function CategoriesNew() {
+export function CategoriesNew({ loadCategory }: any) {
   const [isVisible, setIsVisible] = useState(false);
   const [text, setText] = useState('');
 
@@ -12,20 +11,12 @@ export function CategoriesNew() {
   };
 
   const handleSaveClick = () => {
-    // fetcher(`categories`, { text: text }).then((res) => {
-    //   const { status } = res;
-    //   if (status === 200) {
-    //     setIsVisible(false);
-    //     setText('');
-    //   }
-    // });
-
-    axios.post(`http://localhost:8000/categories`, { title: text }).then((res: any) => {
+    fetcherPost(`categories`, { title: text }).then((res) => {
       const { status } = res;
       if (status === 200) {
-        console.log(status);
         setIsVisible(false);
         setText('');
+        loadCategory();
       }
     });
   };

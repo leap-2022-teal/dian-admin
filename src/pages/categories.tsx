@@ -2,28 +2,22 @@ import { useEffect, useState } from 'react';
 import Home from '../../components/home';
 import { fetcher } from '../../utils/fetcher';
 import { CategoriesNew } from '../../components/categoriesNew';
+import { CategoriesList } from '../../components/categoriesList';
 
 export default function Category(props: any) {
-  const [categories, setCategories] = useState(props.categories);
-
+  const [categories, setCategories] = useState();
   useEffect(() => {
     fetcher(`categories`).then((data) => setCategories(data));
   }, []);
 
+  function loadCategory() {
+    fetcher(`categories`).then((data) => setCategories(data));
+  }
+
   return (
     <Home>
-      <CategoriesNew />
-      {categories?.map((category: any) => {
-        return (
-          <div key={category._id} className="flex">
-            <div>{category.title}</div>
-            <div className="flex">
-              <button onClick={() => {}}>Edit</button>
-              <button onClick={() => {}}>Delete</button>
-            </div>
-          </div>
-        );
-      })}
+      <CategoriesNew loadCategory={loadCategory} />
+      <CategoriesList categories={categories} loadCategory={loadCategory} />
     </Home>
   );
 }
