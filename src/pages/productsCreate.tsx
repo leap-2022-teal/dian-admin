@@ -1,25 +1,28 @@
 import { useEffect, useState } from 'react';
 import AsyncSelect from 'react-select/async';
-import CreatableSelect from 'react-select/creatable';
 import Home from '../../components/home';
-import { fetcher } from '../../utils/fetcher';
+import { fetcherGet, fetcherPost, fetcherPostFile } from '../../utils/fetcher';
 
 function productsCreate(props: any) {
   const [categories, setCategories] = useState(props.categories);
+  const [image, setImage] = useState(props.image);
+  const [title, setTitle] = useState(props.title);
+  const [price, setPrice] = useState(props.title);
+  const [categoryId, setCategoryId] = useState(props.title);
 
-  async function handleFileUpload(event: { target: { files: any[]; }; }) {
+  async function handleFileUpload(event: any) {
     const imageFile = event.target.files[0];
     const formData = new FormData();
-    formData.append("image", imageFile);
-    // console.log(formDate)
-
+    formData.append('image', imageFile);
+    await fetcherPostFile(`upload-image`, formData).then((data: any) => setImage(data));
+  }
   useEffect(() => {
-    fetcher(`categories`).then((data) => setCategories(data));
+    fetcherGet(`categories`).then((data: any) => setCategories(data));
   }, []);
   const categoriesList = categories?.map((category: any) => {
     return { value: category._id, label: category.title };
   });
-  const filterColors = (inputValue: string) => {
+  const filterCategories = (inputValue: string) => {
     return categories
       ?.map((category: any) => {
         return { value: category._id, label: category.title };
@@ -29,23 +32,25 @@ function productsCreate(props: any) {
   const promiseOptions = (inputValue: string) =>
     new Promise<any>((resolve) => {
       setTimeout(() => {
-        resolve(filterColors(inputValue));
+        resolve(filterCategories(inputValue));
       }, 400);
     });
+  function submit() {
+    fetcherPost(`products`, { title, price, image, categoryId }).then((res: any) => {
+      const { status } = res;
+      if (status === 200) {
+        console.log('1');
+      }
+    });
+  }
   return (
     <Home>
       <div className="flex flex-col">
-        <CreatableSelect
-          isClearable
-          options={categories?.map((category: any) => {
-            return { value: category._id, label: category.title };
-          })}
-        />
-        <AsyncSelect cacheOptions defaultOptions={categoriesList} loadOptions={promiseOptions} />
-        <label htmlFor="">title</label>
-        <input type="text"></input>
-        <input type="file"  name="image" onChange={handleFileUpload} ></input>
-        <input type="number"></input>
+        <AsyncSelect value={categoryId} onChange={(val) => setCategoryId(val)} cacheOptions defaultOptions={categoriesList} loadOptions={promiseOptions} />
+        <input placeholder="title" type="text" value={title} onChange={(e) => setTitle(e.target.value)} />
+        <input type="file" name="image" onChange={handleFileUpload} />
+        <input placeholder="price" type="number" value={price} onChange={(e) => setPrice(e.target.value)} />
+        <button onClick={submit}>submit</button>
       </div>
     </Home>
   );

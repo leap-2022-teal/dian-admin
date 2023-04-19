@@ -1,5 +1,5 @@
-import { fetcherPost } from '../utils/fetcher';
 import { useState } from 'react';
+import { fetcherPost } from '../utils/fetcher';
 
 export function CategoriesNew({ loadCategory }: any) {
   const [isVisible, setIsVisible] = useState(false);
@@ -11,7 +11,7 @@ export function CategoriesNew({ loadCategory }: any) {
   };
 
   const handleSaveClick = () => {
-    fetcherPost(`categories`, { title: text }).then((res) => {
+    fetcherPost(`categories`, { text }).then((res) => {
       const { status } = res;
       if (status === 200) {
         setIsVisible(false);
