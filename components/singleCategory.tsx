@@ -1,36 +1,60 @@
-import { fetcherPost } from '../utils/fetcher';
+import axios from 'axios';
 import { useState } from 'react';
+import { fetcherDelete, fetcherPut } from '../utils/fetcher';
 
-export function CategoriesNew({ loadCategory }: any) {
+type MyComponentProps = {
+  category: any;
+  loadCategory: () => void;
+};
+
+export function SingleCategory({ category, loadCategory }: MyComponentProps) {
   const [isVisible, setIsVisible] = useState(false);
   const [text, setText] = useState('');
 
+  function handleDelete() {
+    if (window.confirm('Устгах уу')) {
+      fetcherDelete(`categories/${category._id}`).then((res) => {
+        const { status } = res;
+        if (status === 200) {
+          loadCategory();
+        }
+      });
+    }
+  }
+
+  function handleEdit() {
+    setIsVisible(true);
+  }
+
   const handleCancelClick = () => {
     setIsVisible(false);
-    setText('');
   };
 
   const handleSaveClick = () => {
-    fetcherPost(`categories`, { title: text }).then((res) => {
+    fetcherPut(`categories/${category._id}`, { title: text }).then((res) => {
       const { status } = res;
       if (status === 200) {
+        setText(text);
         setIsVisible(false);
-        setText('');
         loadCategory();
       }
     });
   };
-
   return (
     <>
-      <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" onClick={() => setIsVisible(true)}>
-        Ангилал нэмэх
-      </button>
+      <div key={category._id} className="flex">
+        <div>{category.title}</div>
+        <div className="flex">
+          <button onClick={handleEdit}>Edit</button>
+          <button onClick={handleDelete}>Delete</button>
+        </div>
+      </div>
+
       {isVisible && (
         <div className="fixed inset-0 bg-gray-900 bg-opacity-75 flex items-center justify-center z-10">
           <div className="bg-white rounded-lg p-6 w-full max-w-md">
             <div className="flex justify-between items-center mb-4">
-              <h2 className="text-xl font-bold">Шинэ ангиал нэмэх</h2>
+              <h2 className="text-xl font-bold">Ангилал засах</h2>
               <button className="text-gray-700" onClick={() => setIsVisible(false)}>
                 Хаах
               </button>
@@ -44,7 +68,6 @@ export function CategoriesNew({ loadCategory }: any) {
                 onChange={(e) => {
                   setText(e.target.value);
                 }}
-                placeholder="Ангиллын нэр"
               />
             </div>
             <div className="flex justify-end">
