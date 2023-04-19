@@ -4,18 +4,18 @@ import CreatableSelect from 'react-select/creatable';
 import Home from '../../components/home';
 import { fetcher } from '../../utils/fetcher';
 
-// import CKeditor from '../../components/CKeditor';
-
 function productsCreate(props: any) {
   const [categories, setCategories] = useState(props.categories);
+
+  async function handleFileUpload(event: { target: { files: any[]; }; }) {
+    const imageFile = event.target.files[0];
+    const formData = new FormData();
+    formData.append("image", imageFile);
+    // console.log(formDate)
 
   useEffect(() => {
     fetcher(`categories`).then((data) => setCategories(data));
   }, []);
-  // categories?.map((category: any) => {
-  //   const options = [{ value: category._id, label: category.title }];
-  // });
-
   const categoriesList = categories?.map((category: any) => {
     return { value: category._id, label: category.title };
   });
@@ -26,7 +26,6 @@ function productsCreate(props: any) {
       })
       .filter((i: any) => i.label.toLowerCase().includes(inputValue.toLowerCase()));
   };
-  // let CategoryOption = [];
   const promiseOptions = (inputValue: string) =>
     new Promise<any>((resolve) => {
       setTimeout(() => {
@@ -35,17 +34,19 @@ function productsCreate(props: any) {
     });
   return (
     <Home>
-      <label htmlFor="">title</label>
-      <input type="text"></input>
-      <CreatableSelect
-        isClearable
-        options={categories?.map((category: any) => {
-          return { value: category._id, label: category.title };
-        })}
-      />
-      <AsyncSelect cacheOptions defaultOptions={categoriesList} loadOptions={promiseOptions} />
-      <input type="file"></input>
-      <input type="number"></input>
+      <div className="flex flex-col">
+        <CreatableSelect
+          isClearable
+          options={categories?.map((category: any) => {
+            return { value: category._id, label: category.title };
+          })}
+        />
+        <AsyncSelect cacheOptions defaultOptions={categoriesList} loadOptions={promiseOptions} />
+        <label htmlFor="">title</label>
+        <input type="text"></input>
+        <input type="file"  name="image" onChange={handleFileUpload} ></input>
+        <input type="number"></input>
+      </div>
     </Home>
   );
 }
