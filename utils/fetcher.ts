@@ -4,6 +4,7 @@ export async function fetcherGet(path: string) {
   return data;
 }
 
+
 export const fetcherPost = async (path: string, data: any) => {
   const req = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/${path}`, {
     method: 'POST',
@@ -47,6 +48,13 @@ export const fetcherPostFile = async (path: string, data: any) => {
   })
   const jsonData = await req.json();
   return jsonData
-
-  // return ;
+};
+export const fetcherPutFile = async (path: string, data: any) => {
+  const req = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/${path}`, {
+    method: 'PUT',
+    body: data,
+   
+  })
+  const jsonData = await req.json();
+  return jsonData
 };
