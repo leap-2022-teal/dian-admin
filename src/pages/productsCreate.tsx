@@ -3,7 +3,7 @@ import AsyncSelect from 'react-select/async';
 import Home from '../../components/home';
 import { fetcherGet, fetcherPost, fetcherPostFile } from '../../utils/fetcher';
 
-function productsCreate(props: any) {
+function ProductsCreate(props: any) {
   const [categories, setCategories] = useState(props.categories);
   const [image, setImage] = useState(props.image);
   const [title, setTitle] = useState(props.title);
@@ -56,4 +56,4 @@ function productsCreate(props: any) {
   );
 }
 
-export default productsCreate;
+export default ProductsCreate;
