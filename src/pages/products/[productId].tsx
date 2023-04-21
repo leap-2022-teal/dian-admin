@@ -71,9 +71,9 @@ export default function SingleCategory({ product }: any, props: any) {
           <input value={title} type="text" onChange={(e) => setTitle(e.target.value)}></input>
           <AsyncSelect value={categoryId} onChange={(val) => setCategoryId(val)} cacheOptions defaultOptions={categoriesList} loadOptions={promiseOptions} />
           <input type="number" value={price} onChange={(e) => setPrice(e.target.value)} />
+          <button onClick={submit}>submit</button>
         </>
       )}
-      <button onClick={submit}>submit</button>
       <div onClick={toggleVariant} className=" ml-1 hover:under cursor-pointer">
         {variant === 'edit' ? 'zasah' : 'bolih'}
       </div>
