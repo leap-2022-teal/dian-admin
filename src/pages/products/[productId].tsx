@@ -1,8 +1,10 @@
+import { useRouter } from 'next/router';
 import { useCallback, useEffect, useState } from 'react';
 import AsyncSelect from 'react-select/async';
-import { fetcherGet, fetcherPostFile, fetcherPut } from '../../../utils/fetcher';
+import { fetcherDelete, fetcherGet, fetcherPostFile, fetcherPut } from '../../../utils/fetcher';
 
 export default function SingleCategory({ product }: any, props: any) {
+  const router = useRouter();
   const [categories, setCategories] = useState(props.categories);
   const [image, setImage] = useState(props.image);
   const [title, setTitle] = useState(props.title);
@@ -23,6 +25,7 @@ export default function SingleCategory({ product }: any, props: any) {
   useEffect(() => {
     fetcherGet(`categories`).then((data: any) => setCategories(data));
   }, []);
+
   const categoriesList = categories?.map((category: any) => {
     return { value: category._id, label: category.title };
   });
@@ -44,6 +47,17 @@ export default function SingleCategory({ product }: any, props: any) {
     return category._id === product.categoryId;
   })[0];
 
+  function handleDelete() {
+    if (window.confirm('Устгах уу')) {
+      fetcherDelete(`products/${product._id}`).then((res) => {
+        const { status } = res;
+        if (status === 200) {
+          router.push('/products');
+        }
+      });
+    }
+  }
+
   function submit() {
     fetcherPut(`products/${product._id}`, { title, price, image, categoryId }).then((res: any) => {
       const { status } = res;
@@ -64,7 +78,9 @@ export default function SingleCategory({ product }: any, props: any) {
           <h3 className="truncate text-slate-800">{product?.title}</h3>
           <p>{category?.title}</p>
           <p>{product.unitPrice}</p>
-          <button className="border rounded">utsgah</button>
+          <button className="border rounded" onClick={handleDelete}>
+            utsgah
+          </button>
         </>
       ) : (
         <>
