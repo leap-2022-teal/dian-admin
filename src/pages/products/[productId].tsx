@@ -64,6 +64,7 @@ export default function SingleCategory({ product }: any, props: any) {
           <h3 className="truncate text-slate-800">{product?.title}</h3>
           <p>{category?.title}</p>
           <p>{product.unitPrice}</p>
+          <button className="border rounded">utsgah</button>
         </>
       ) : (
         <>
@@ -74,9 +75,9 @@ export default function SingleCategory({ product }: any, props: any) {
           <button onClick={submit}>submit</button>
         </>
       )}
-      <div onClick={toggleVariant} className=" ml-1 hover:under cursor-pointer">
+      <button onClick={toggleVariant} className=" ml-1 hover:under border rounded">
         {variant === 'edit' ? 'zasah' : 'bolih'}
-      </div>
+      </button>
     </div>
   );
 }
