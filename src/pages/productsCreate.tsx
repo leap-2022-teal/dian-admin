@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
 import AsyncSelect from 'react-select/async';
-  
 import { fetcherGet, fetcherPost, fetcherPostFile } from '../../utils/fetcher';
 
 function ProductsCreate(props: any) {
@@ -49,6 +48,7 @@ function ProductsCreate(props: any) {
       <input placeholder="title" type="text" value={title} onChange={(e) => setTitle(e.target.value)} />
       <input type="file" name="image" onChange={handleFileUpload} />
       <input placeholder="price" type="number" value={price} onChange={(e) => setPrice(e.target.value)} />
+      <img src={image.path} />
       <button onClick={submit}>submit</button>
     </div>
   );
