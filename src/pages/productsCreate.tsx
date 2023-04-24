@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import AsyncSelect from 'react-select/async';
-import Home from '../../components/home';
+  
 import { fetcherGet, fetcherPost, fetcherPostFile } from '../../utils/fetcher';
 
 function ProductsCreate(props: any) {
@@ -44,15 +44,13 @@ function ProductsCreate(props: any) {
     });
   }
   return (
-    <Home>
-      <div className="flex flex-col">
-        <AsyncSelect value={categoryId} onChange={(val) => setCategoryId(val)} cacheOptions defaultOptions={categoriesList} loadOptions={promiseOptions} />
-        <input placeholder="title" type="text" value={title} onChange={(e) => setTitle(e.target.value)} />
-        <input type="file" name="image" onChange={handleFileUpload} />
-        <input placeholder="price" type="number" value={price} onChange={(e) => setPrice(e.target.value)} />
-        <button onClick={submit}>submit</button>
-      </div>
-    </Home>
+    <div className="flex flex-col">
+      <AsyncSelect value={categoryId} onChange={(val) => setCategoryId(val)} cacheOptions defaultOptions={categoriesList} loadOptions={promiseOptions} />
+      <input placeholder="title" type="text" value={title} onChange={(e) => setTitle(e.target.value)} />
+      <input type="file" name="image" onChange={handleFileUpload} />
+      <input placeholder="price" type="number" value={price} onChange={(e) => setPrice(e.target.value)} />
+      <button onClick={submit}>submit</button>
+    </div>
   );
 }
 
