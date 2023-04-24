@@ -5,7 +5,7 @@ export function CategoriesList({ categories, loadCategory }: any) {
     <>
       {categories?.map((category: any) => {
         return (
-          <div key={category._id}>
+          <div key={category._id} className="border-black ">
             <SingleCategory category={category} loadCategory={loadCategory} />
           </div>
         );

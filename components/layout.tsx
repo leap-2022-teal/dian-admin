@@ -1,12 +1,20 @@
 import Link from 'next/link';
-import { useState } from 'react';
-export default function Home({ children }: any) {
+import { useEffect, useState } from 'react';
+import { fetcherGet } from '../utils/fetcher';
+// import Product from './singleProducts';
+export default function Layout({ children }: any) {
   const [show, setShow] = useState(false);
   const [profile, setProfile] = useState(false);
   const [menu, setMenu] = useState(false);
   const [menu1, setMenu1] = useState(false);
   const [menu2, setMenu2] = useState(false);
   const [menu3, setMenu3] = useState(false);
+
+  // const [products, setProducts] = useState();
+  // console.log(products);
+  // useEffect(() => {
+  //   fetcherGet(`products`).then((data) => setProducts(data));
+  // }, []);
 
   return (
     <>
@@ -439,8 +447,8 @@ export default function Home({ children }: any) {
                 )}
               </div>
             </nav>
-
             {children}
+           
           </div>
         </div>
       </div>

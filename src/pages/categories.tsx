@@ -1,8 +1,7 @@
 import { useEffect, useState } from 'react';
-import Home from '../../components/home';
-import { fetcherGet } from '../../utils/fetcher';
-import { CategoriesNew } from '../../components/categoriesNew';
 import { CategoriesList } from '../../components/categoriesList';
+import { CategoriesNew } from '../../components/categoriesNew';
+import { fetcherGet } from '../../utils/fetcher';
 
 export default function Category(props: any) {
   const [categories, setCategories] = useState();
@@ -15,9 +14,9 @@ export default function Category(props: any) {
   }
 
   return (
-    <Home>
+    <div>
       <CategoriesNew loadCategory={loadCategory} />
       <CategoriesList categories={categories} loadCategory={loadCategory} />
-    </Home>
+    </div>
   );
 }
