@@ -439,7 +439,6 @@ export default function Home({ children }: any) {
                 )}
               </div>
             </nav>
-
             {children}
           </div>
         </div>

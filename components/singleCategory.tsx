@@ -1,4 +1,3 @@
-import axios from 'axios';
 import { useState } from 'react';
 import { fetcherDelete, fetcherPut } from '../utils/fetcher';
 
@@ -42,7 +41,7 @@ export function SingleCategory({ category, loadCategory }: MyComponentProps) {
   };
   return (
     <>
-      <div key={category._id} className="flex">
+      <div key={category._id} className="flex space-x-4 space-x-reverse border-black bg-slate-600">
         <div>{category.title}</div>
         <div className="flex">
           <button onClick={handleEdit}>Edit</button>
