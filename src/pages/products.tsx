@@ -1,40 +1,61 @@
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
-import { fetcherGet } from '../../utils/fetcher';
+import { fetcherDelete, fetcherGet } from '../../utils/fetcher';
 import ProductModal from '../../components/productModal';
+import { useRouter } from 'next/router';
 
 export default function Product(props: any) {
+  const router = useRouter();
+  const [isOpen, setIsOpen] = useState(false);
   const [products, setProducts] = useState(props.categories);
   const [editing, setEditing] = useState('');
   const [editingProduct, setEditingProduct] = useState<any>();
+  const [creating, setCreating] = useState('');
 
   useEffect(() => {
     fetcherGet(`products`).then((data) => setProducts(data));
   }, []);
 
   function handleEdit(e: string) {
-    const a = products.filter((i: any) => {
+    const productFilter = products.filter((i: any) => {
       if (i._id === e) {
         return i;
       }
     });
-    setEditingProduct(a[0]);
+    setEditingProduct(productFilter[0]);
     setEditing('editing');
+  }
+
+  function handleCreate() {
+    setCreating('creating');
+  }
+
+  function handleDelete(e: string) {
+    if (window.confirm('Устгах уу')) {
+      fetcherDelete(`products/${e}`).then((res) => {
+        const { status } = res;
+        if (status === 200) {
+          router.push('/products');
+        }
+      });
+    }
+  }
+
+  function handleClick(e: any) {
+    setIsOpen(true);
   }
 
   return (
     <>
-      {editing && (
-        <div>
-          <h1>{editingProduct?.title}</h1>
-        </div>
-      )}
       <div className="m-[2rem]">
-        <button className=" my-5 px-3 py-2 font-normal leading-5 text-white transition-colors duration-150 bg-purple-500  border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple dark:bg-gray-400  dark:active:bg-gray-600 dark:hover:bg-gray-700 dark:focus:shadow-outline-gray">
+        <button
+          onClick={handleCreate}
+          className=" my-5 px-3 py-2 font-normal leading-5 text-white transition-colors duration-150 bg-purple-500  border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple"
+        >
           Бүтээгдэхүүн нэмэх
         </button>
 
-        <ProductModal editing={editing} editingProduct={editingProduct} />
+        <ProductModal editing={editing} editingProduct={editingProduct} creating={creating} />
 
         <div className="w-fulloverflow-hidden rounded-lg shadow-xs">
           <div className="w-full overflow-x-auto">
@@ -43,7 +64,6 @@ export default function Product(props: any) {
                 <tr className="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800">
                   <th className="px-4 py-3">Products</th>
                   <th className="px-4 py-3">Price</th>
-                  {/* <th className="px-4 py-3">Status</th> */}
                   <th className="px-4 py-3">Brand</th>
                   <th className="px-4 py-3">Actions</th>
                 </tr>
@@ -57,14 +77,14 @@ export default function Product(props: any) {
                           <img className="object-cover w-full h-full rounded-full" src={product.imageUrl} alt={product.title} loading="lazy" />
                           <div className="absolute inset-0 rounded-full shadow-inner" aria-hidden="true"></div>
                         </div>
-
-                        <p className="font-semibold">{product.title} </p>
+                        <p onClick={() => handleClick(product._id)} className="font-semibold">
+                          {product.title}
+                        </p>
                       </div>
+                      {isOpen && <div className="mt-4">{product.description.short}</div>}
                     </td>
                     <td className="px-4 py-3 text-sm">{product.unitPrice}₮</td>
-                    {/* <td className="px-4 py-3 text-xs">
-                    <span className="px-2 py-1 font-semibold leading-tight text-green-700 bg-green-100 rounded-full dark:bg-green-700 dark:text-green-100">Approved</span>
-                  </td> */}
+
                     <td className="px-4 py-3 text-sm">{product.brand.title}</td>
                     <td className="px-4 py-3">
                       <div className="flex items-center space-x-4 text-sm">
@@ -78,6 +98,7 @@ export default function Product(props: any) {
                           </svg>
                         </button>
                         <button
+                          onClick={() => handleDelete(product._id)}
                           className="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-purple-600 rounded-lg dark:text-gray-400 focus:outline-none focus:shadow-outline-gray"
                           aria-label="Delete"
                         >

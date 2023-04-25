@@ -15,12 +15,15 @@ function ProductsCreate(props: any) {
     formData.append('image', imageFile);
     await fetcherPostFile(`upload-image`, formData).then((data: any) => setImage(data));
   }
+
   useEffect(() => {
     fetcherGet(`categories`).then((data: any) => setCategories(data));
   }, []);
+
   const categoriesList = categories?.map((category: any) => {
     return { value: category._id, label: category.title };
   });
+
   const filterCategories = (inputValue: string) => {
     return categories
       ?.map((category: any) => {
@@ -28,12 +31,14 @@ function ProductsCreate(props: any) {
       })
       .filter((i: any) => i.label.toLowerCase().includes(inputValue.toLowerCase()));
   };
+
   const promiseOptions = (inputValue: string) =>
     new Promise<any>((resolve) => {
       setTimeout(() => {
         resolve(filterCategories(inputValue));
       }, 400);
     });
+
   function submit() {
     fetcherPost(`products`, { title, price, image, categoryId }).then((res: any) => {
       const { status } = res;
@@ -42,6 +47,7 @@ function ProductsCreate(props: any) {
       }
     });
   }
+
   return (
     <div className="flex flex-col">
       <AsyncSelect value={categoryId} onChange={(val) => setCategoryId(val)} cacheOptions defaultOptions={categoriesList} loadOptions={promiseOptions} />
