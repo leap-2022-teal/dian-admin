@@ -448,7 +448,6 @@ export default function Layout({ children }: any) {
               </div>
             </nav>
             {children}
-           
           </div>
         </div>
       </div>
