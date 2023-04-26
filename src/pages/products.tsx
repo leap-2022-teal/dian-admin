@@ -1,40 +1,33 @@
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
+import Example from '../../components/modal';
 import { fetcherGet } from '../../utils/fetcher';
 
 export default function Product(props: any) {
   const [products, setProducts] = useState(props.categories);
   const [editing, setEditing] = useState('');
+  console.log(editing);
 
   useEffect(() => {
     fetcherGet(`products`).then((data) => setProducts(data));
   }, []);
 
+  function onEdit(e: any) {
+    // setMovie(e)
+    setEditing('editing');
+  }
+
   return (
-    <div className="grid grid-cols-3 gap-3">
+    <>
+      {editing && <Example editing={editing} />}
       <button
         onClick={() => {
-          setEditing('edit');
+          setEditing('new');
         }}
       >
-        Edit
+        new
       </button>
-      <button>New</button>
-      {/* <table className="table-fixed  border-black border-2 border-solid mx-auto">
-        <thead>
-          <tr>
-            <th>Image</th>
-            <th>title</th>
-            <th>Price</th>
-          </tr>
-        </thead>
-        <tbody>
-          {editing && <Modal />}
-          {products?.map((product: any) => (
-            <SingleProduct product={product} />
-          ))}
-        </tbody>
-      </table> */}
+      {/* <button>New</button> */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
         {products?.map((product: any) => (
           <div key={product._id} className="bg-white shadow rounded-lg overflow-hidden flex w-full">
@@ -49,7 +42,7 @@ export default function Product(props: any) {
                 </Link>
                 <button
                   onClick={() => {
-                    setEditing('new');
+                    setEditing('editing');
                   }}
                 >
                   <div className="mt-4 bg-gray-900 text-white py-2 px-4 rounded hover:bg-gray-800 focus:bg-gray-800">edit</div>
@@ -59,6 +52,6 @@ export default function Product(props: any) {
           </div>
         ))}
       </div>
-    </div>
+    </>
   );
 }
