@@ -3,7 +3,7 @@ import { useCallback, useEffect, useState } from 'react';
 import AsyncSelect from 'react-select/async';
 import { fetcherDelete, fetcherGet, fetcherPostFile, fetcherPut } from '../../../utils/fetcher';
 
-export default function singleProducts({ product }: any, props: any) {
+export default function SingleProducts({ product }: any, props: any) {
   const router = useRouter();
   const [categories, setCategories] = useState(props.categories);
   const [image, setImage] = useState(props.image);
