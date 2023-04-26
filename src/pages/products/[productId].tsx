@@ -29,6 +29,7 @@ export default function SingleProducts({ product }: any, props: any) {
   const categoriesList = categories?.map((category: any) => {
     return { value: category._id, label: category.title };
   });
+
   const filterCategories = (inputValue: string) => {
     return categories
       ?.map((category: any) => {

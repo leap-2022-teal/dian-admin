@@ -1,40 +1,45 @@
-import Link from 'next/link';
 import { useEffect, useState } from 'react';
-
-
-
 import { fetcherDelete, fetcherGet } from '../../utils/fetcher';
 import ProductModal from '../../components/productModal';
 import { useRouter } from 'next/router';
-
 
 export default function Product(props: any) {
   const router = useRouter();
   const [isOpen, setIsOpen] = useState(false);
   const [products, setProducts] = useState(props.categories);
-  const [editing, setEditing] = useState('');
-
+  const [variant, setVariant] = useState('');
   const [editingProduct, setEditingProduct] = useState<any>();
-  const [creating, setCreating] = useState('');
-
+  const [categories, setCategories] = useState();
 
   useEffect(() => {
     fetcherGet(`products`).then((data) => setProducts(data));
   }, []);
 
+  function loadProduct() {
+    fetcherGet(`products`).then((data) => setProducts(data));
+  }
+
+  useEffect(() => {
+    fetcherGet(`categories`).then((data: any) => setCategories(data));
+  }, []);
+
+  function loadCategory() {
+    fetcherGet(`categories`).then((data: any) => setCategories(data));
+  }
 
   function handleEdit(e: string) {
-    const productFilter = products.filter((i: any) => {
-      if (i._id === e) {
-        return i;
+    const productFilter = products.filter((product: any) => {
+      if (product._id === e) {
+        return product;
       }
     });
+
     setEditingProduct(productFilter[0]);
-    setEditing('editing');
+    setVariant('editing');
   }
 
   function handleCreate() {
-    setCreating('creating');
+    setVariant('creating');
   }
 
   function handleDelete(e: string) {
@@ -43,6 +48,7 @@ export default function Product(props: any) {
         const { status } = res;
         if (status === 200) {
           router.push('/products');
+          loadProduct();
         }
       });
     }
@@ -50,6 +56,11 @@ export default function Product(props: any) {
 
   function handleClick(e: any) {
     setIsOpen(true);
+  }
+
+  function handleClose() {
+    setVariant('');
+    setEditingProduct('');
   }
 
   return (
@@ -62,7 +73,9 @@ export default function Product(props: any) {
           Бүтээгдэхүүн нэмэх
         </button>
 
-        <ProductModal editing={editing} editingProduct={editingProduct} creating={creating} />
+        {variant && (
+          <ProductModal categories={categories} loadCategory={loadCategory} loadProduct={loadProduct} variant={variant} editingProduct={editingProduct} handleClose={handleClose} products={products} />
+        )}
 
         <div className="w-fulloverflow-hidden rounded-lg shadow-xs">
           <div className="w-full overflow-x-auto">
@@ -71,6 +84,7 @@ export default function Product(props: any) {
                 <tr className="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800">
                   <th className="px-4 py-3">Products</th>
                   <th className="px-4 py-3">Price</th>
+                  <th className="px-4 py-3">Category</th>
                   <th className="px-4 py-3">Brand</th>
                   <th className="px-4 py-3">Actions</th>
                 </tr>
@@ -91,7 +105,7 @@ export default function Product(props: any) {
                       {isOpen && <div className="mt-4">{product.description.short}</div>}
                     </td>
                     <td className="px-4 py-3 text-sm">{product.unitPrice}₮</td>
-
+                    <td className="px-4 py-3 text-sm">{product.categoryId?.title}</td>
                     <td className="px-4 py-3 text-sm">{product.brand.title}</td>
                     <td className="px-4 py-3">
                       <div className="flex items-center space-x-4 text-sm">
