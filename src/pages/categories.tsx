@@ -14,7 +14,7 @@ export default function Category(props: any) {
   }
 
   return (
-    <div>
+    <div className="m-[2rem]">
       <CategoriesNew loadCategory={loadCategory} />
       <CategoriesList categories={categories} loadCategory={loadCategory} />
     </div>

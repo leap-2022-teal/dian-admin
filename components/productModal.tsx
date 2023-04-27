@@ -1,8 +1,7 @@
 import { useEffect, useState } from 'react';
-import { fetcherGet, fetcherPost, fetcherPostFile, fetcherPut } from '../utils/fetcher';
+import { fetcherPost, fetcherPostFile, fetcherPut } from '../utils/fetcher';
 import AsyncSelect from 'react-select/async';
 
-// 4. category oruulj ireh (edit, create)
 // 6. description drop
 
 type MyComponentProps = {

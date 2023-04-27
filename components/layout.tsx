@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import { fetcherGet } from '../utils/fetcher';
-// import Product from './singleProducts';
+
 export default function Layout({ children }: any) {
   const [show, setShow] = useState(false);
   const [profile, setProfile] = useState(false);
@@ -10,18 +10,12 @@ export default function Layout({ children }: any) {
   const [menu2, setMenu2] = useState(false);
   const [menu3, setMenu3] = useState(false);
 
-  // const [products, setProducts] = useState();
-  // console.log(products);
-  // useEffect(() => {
-  //   fetcherGet(`products`).then((data) => setProducts(data));
-  // }, []);
-
   return (
     <>
       <div className="w-full h-full bg-gray-200">
         <div className="flex flex-no-wrap">
           {/* Sidebar starts */}
-          <div className="absolute lg:relative w-64 shadow bg-gray-100 hidden lg:block">
+          <div className=" absolute lg:relative w-64 shadow bg-gray-100 hidden lg:block">
             <div className="h-16 w-full flex items-center px-10">
               <svg xmlns="http://www.w3.org/2000/svg" width={144} height={30} viewBox="0 0 144 30">
                 <path
