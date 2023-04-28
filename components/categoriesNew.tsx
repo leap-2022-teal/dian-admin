@@ -1,35 +1,21 @@
 import { useEffect, useState } from 'react';
 import { fetcherGet, fetcherPost } from '../utils/fetcher';
-import AsyncSelect from 'react-select/async';
+import React from 'react';
+import CreatableSelect from 'react-select/creatable';
 
-export function CategoriesNew({ loadCategory }: any) {
+export function CategoriesNew({ loadCategory, categories }: any) {
   const [isVisible, setIsVisible] = useState(false);
   const [title, setTitle] = useState('');
   const [subCategories, setSubCategories] = useState<any>();
+  const [category, setCategory] = useState('');
 
-  useEffect(() => {
-    fetcherGet(`categories/subCategory`).then((data) => setSubCategories(data));
-  }, []);
+  // useEffect(() => {
+  //   fetcherGet(`categories/subCategory`).then((data) => setSubCategories(data));
+  // }, []);
 
-  const subCategoriesList = subCategories?.map((subCategory: any) => {
-    return { value: subCategory.title, label: subCategory.title };
+  const categoriesList = categories?.map((category: any) => {
+    return { value: category._id, label: category.title };
   });
-  console.log(subCategories);
-
-  const filterSubCategories = (inputValue: string) => {
-    return subCategories
-      ?.map((subCategory: any) => {
-        return { value: subCategory._id, label: subCategory.title };
-      })
-      .filter((i: any) => i.label.toLowerCase().includes(inputValue.toLowerCase()));
-  };
-
-  const promiseOptions = (inputValue: string) =>
-    new Promise<any>((resolve) => {
-      setTimeout(() => {
-        resolve(filterSubCategories(inputValue));
-      }, 400);
-    });
 
   const handleCancelClick = () => {
     setIsVisible(false);
@@ -58,36 +44,48 @@ export function CategoriesNew({ loadCategory }: any) {
       {isVisible && (
         <>
           <div className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none">
-            <div className="relative w-auto my-6 mx-auto max-w-3xl">
+            <div className="relative w-auto mx-auto max-w-3xl">
               <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
                 <div className="flex items-start justify-between p-5 border-b border-solid border-slate-200 rounded-t">
                   <h3 className="text-3xl font-semibold">Ангилал нэмэх</h3>
-                  <button className="p-1 ml-auto bg-transparent border-0 text-black opacity-5 float-right text-3xl leading-none font-semibold outline-none focus:outline-none">
-                    <span className="bg-transparent text-black opacity-5 h-6 w-6 text-2xl block outline-none focus:outline-none">×</span>
-                  </button>
                 </div>
 
-                <div className="mx-[2rem] grid grid-cols-2 md:flex-row gap-10">
+                <div className="m-[1rem] p-[1rem] grid grid-cols-1 gap-10">
                   <div>
                     <label htmlFor="title" className="block mb-2 font-medium text-gray-700">
-                      Ангилалын нэр
+                      Ангилал
                     </label>
-                    <input
+                    <CreatableSelect isClearable options={categoriesList} value={title} onChange={(value: any) => setTitle(value)} />
+                    {/* <input
                       placeholder=" Ангилалын нэрээ оруулна уу"
                       type="text"
                       name="title"
                       value={title}
-                      className="block w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+                      className="block w-full py-2 px-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
                       onChange={(e) => setTitle(e.target.value)}
+                    /> */}
+                  </div>
+
+                  <div>
+                    <label htmlFor="title" className="block mb-2 font-medium text-gray-700">
+                      Дэд ангилал
+                    </label>
+                    <input
+                      value={subCategories}
+                      onChange={(e) => setSubCategories(e.target.value)}
+                      placeholder="  Дэд ангилалын нэрээ оруулна уу"
+                      type="text"
+                      name="title"
+                      className="block w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
                     />
                   </div>
                 </div>
 
-                <div className="w-full  p-8 items-center bg-white rounded-2xl shadow-xl overflow-hidden sm:max-w-4xl hover:shadow-xl dark:bg-gray-500">
+                {/* <div className="w-full  p-8 items-center bg-white rounded-2xl shadow-xl overflow-hidden sm:max-w-4xl hover:shadow-xl dark:bg-gray-500">
                   <form action="#">
                     <div className="mb-2">
                       <label htmlFor="title" className="block mb-2 font-medium text-gray-700">
-                        Ангилал
+                        Дэд Ангилал
                       </label>
                       <AsyncSelect value={subCategories.title} onChange={(val: any) => setSubCategories(val)} cacheOptions defaultOptions={subCategoriesList} loadOptions={promiseOptions} />
                     </div>
@@ -104,7 +102,7 @@ export function CategoriesNew({ loadCategory }: any) {
                       </svg>
                     </span>
                   </div>
-                </div>
+                </div> */}
 
                 <div className="flex items-center justify-end p-6 border-t border-solid border-slate-200 rounded-b">
                   <button
