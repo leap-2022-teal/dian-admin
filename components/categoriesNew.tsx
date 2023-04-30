@@ -1,17 +1,12 @@
-import { useEffect, useState } from 'react';
-import { fetcherGet, fetcherPost } from '../utils/fetcher';
+import { useState } from 'react';
+import { fetcherPost } from '../utils/fetcher';
 import React from 'react';
 import CreatableSelect from 'react-select/creatable';
 
 export function CategoriesNew({ loadCategory, categories }: any) {
   const [isVisible, setIsVisible] = useState(false);
   const [title, setTitle] = useState('');
-  const [subCategories, setSubCategories] = useState<any>();
-  const [category, setCategory] = useState('');
-
-  // useEffect(() => {
-  //   fetcherGet(`categories/subCategory`).then((data) => setSubCategories(data));
-  // }, []);
+  const [subTitle, setSubTitle] = useState<any>();
 
   const categoriesList = categories?.map((category: any) => {
     return { value: category._id, label: category.title };
@@ -23,7 +18,7 @@ export function CategoriesNew({ loadCategory, categories }: any) {
   };
 
   const handleSaveClick = () => {
-    fetcherPost(`categories`, { title }).then((res) => {
+    fetcherPost(`categories`, { title, subTitle }).then((res) => {
       const { status } = res;
       if (status === 200) {
         setIsVisible(false);
@@ -56,23 +51,13 @@ export function CategoriesNew({ loadCategory, categories }: any) {
                       Ангилал
                     </label>
                     <CreatableSelect isClearable options={categoriesList} value={title} onChange={(value: any) => setTitle(value)} />
-                    {/* <input
-                      placeholder=" Ангилалын нэрээ оруулна уу"
-                      type="text"
-                      name="title"
-                      value={title}
-                      className="block w-full py-2 px-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
-                      onChange={(e) => setTitle(e.target.value)}
-                    /> */}
                   </div>
 
                   <div>
-                    <label htmlFor="title" className="block mb-2 font-medium text-gray-700">
-                      Дэд ангилал
-                    </label>
+                    <label className="block mb-2 font-medium text-gray-700">Дэд ангилал</label>
                     <input
-                      value={subCategories}
-                      onChange={(e) => setSubCategories(e.target.value)}
+                      value={subTitle}
+                      onChange={(e) => setSubTitle(e.target.value)}
                       placeholder="  Дэд ангилалын нэрээ оруулна уу"
                       type="text"
                       name="title"
@@ -81,43 +66,20 @@ export function CategoriesNew({ loadCategory, categories }: any) {
                   </div>
                 </div>
 
-                {/* <div className="w-full  p-8 items-center bg-white rounded-2xl shadow-xl overflow-hidden sm:max-w-4xl hover:shadow-xl dark:bg-gray-500">
-                  <form action="#">
-                    <div className="mb-2">
-                      <label htmlFor="title" className="block mb-2 font-medium text-gray-700">
-                        Дэд Ангилал
-                      </label>
-                      <AsyncSelect value={subCategories.title} onChange={(val: any) => setSubCategories(val)} cacheOptions defaultOptions={subCategoriesList} loadOptions={promiseOptions} />
-                    </div>
-                  </form>
-                  <div className="px-1 pt-2 pb-11 mb-3 flex flex-wrap rounded-lg border border-gray-300">
-                    <span className="flex flex-wrap pl-2 pr-1 py-1 m-1 justify-between items-center text-xs font-medium rounded-xl cursor-pointer bg-gray-300 text-gray-600">
-                      UI/UX
-                      <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-4 ml-2 hover:text-gray-800" viewBox="0 0 20 20" fill="currentColor">
-                        <path
-                          fillRule="evenodd"
-                          d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z"
-                          clipRule="evenodd"
-                        />
-                      </svg>
-                    </span>
-                  </div>
-                </div> */}
-
                 <div className="flex items-center justify-end p-6 border-t border-solid border-slate-200 rounded-b">
                   <button
                     className="text-red-500 background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                     type="button"
                     onClick={handleCancelClick}
                   >
-                    Close
+                    Хаах
                   </button>
                   <button
                     className="bg-emerald-500 text-white active:bg-emerald-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                     type="button"
                     onClick={handleSaveClick}
                   >
-                    Save Changes
+                    Хадгалах
                   </button>
                 </div>
               </div>

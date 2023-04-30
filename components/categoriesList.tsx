@@ -3,7 +3,7 @@ import { SingleCategory } from './singleCategory';
 export function CategoriesList({ categories, loadCategory }: any) {
   return (
     <>
-      <div className="mt-[2rem] w-full overflow-hidden rounded-lg shadow-xs">
+      <div className="mt-[1rem] w-full overflow-hidden rounded-lg shadow-xs">
         <div className="w-full overflow-x-auto">
           <table className="w-full whitespace-no-wrap">
             <thead>
