@@ -72,7 +72,9 @@ export function SingleCategory({ category, loadCategory, categories }: MyCompone
       }
     });
 
-    fetcherPost(`categories`, { title: subCategories }).then((res) => {
+    console.log(subCategories);
+    fetcherPost(`categories`, { subCategories }).then((res) => {
+      console.log(subCategories);
       const { status } = res;
       if (status === 200) {
         setSubCategories(subCategories);
