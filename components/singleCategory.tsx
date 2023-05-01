@@ -1,31 +1,18 @@
 import { useEffect, useState } from 'react';
-import { fetcherDelete, fetcherGet, fetcherPut } from '../utils/fetcher';
-import CreatableSelect from 'react-select/creatable';
+import { fetcherDelete, fetcherGet, fetcherPost, fetcherPut } from '../utils/fetcher';
+import 'react-toastify/dist/ReactToastify.css';
+import { toast } from 'react-toastify';
 
 type MyComponentProps = {
   category: any;
+  categories: any;
   loadCategory: () => void;
 };
 
-export function SingleCategory({ category, loadCategory }: MyComponentProps) {
+export function SingleCategory({ category, loadCategory, categories }: MyComponentProps) {
   const [isVisible, setIsVisible] = useState(false);
-  const [text, setText] = useState('');
   const [subCategories, setSubCategories] = useState<any>();
-  const [subTitle, setSubTitle] = useState();
   const [categoryTitle, setCategoryTitle] = useState();
-  const [selectedOptions, setSelectedOptions] = useState<any>([]);
-
-  const options = [
-    { value: 'apple', label: 'Apple' },
-    { value: 'banana', label: 'Banana' },
-    { value: 'orange', label: 'Orange' },
-    { value: 'pear', label: 'Pear' },
-  ];
-
-  const handleCreateOption = (inputValue: any) => {
-    const newOption = { value: inputValue, label: inputValue };
-    setSelectedOptions([...selectedOptions, newOption]);
-  };
 
   useEffect(() => {
     fetcherGet(`categories/${category._id}`).then((data) => setSubCategories(data));
@@ -36,6 +23,7 @@ export function SingleCategory({ category, loadCategory }: MyComponentProps) {
       fetcherDelete(`categories/${category._id}`).then((res) => {
         const { status } = res;
         if (status === 200) {
+          toast.success('Амжилттай устгалаа');
           loadCategory();
         }
       });
@@ -47,7 +35,7 @@ export function SingleCategory({ category, loadCategory }: MyComponentProps) {
       fetcherDelete(`categories/subCategory/${subCategoryId}`).then((res) => {
         const { status } = res;
         if (status === 200) {
-          console.log('amjilttai');
+          toast.success('Амжилттай устгалаа');
         }
       });
     }
@@ -55,22 +43,46 @@ export function SingleCategory({ category, loadCategory }: MyComponentProps) {
 
   function handleEdit(e: any) {
     setIsVisible(true);
+
+    categories.filter((category: any) => {
+      if (category._id === e) {
+        return category;
+      }
+    });
+    setCategoryTitle(category.title);
   }
 
   const handleCancelClick = () => {
     setIsVisible(false);
   };
 
+  const handleKeyDown = (event: any) => {
+    if (event.key === 'Enter') {
+      event.preventDefault();
+      setSubCategories([...subCategories, { title: event.target.value }]);
+    }
+  };
+
   const handleSaveClick = () => {
-    fetcherPut(`categories/${category._id}`, { title: text }).then((res) => {
+    fetcherPut(`categories/${category._id}`, { title: categoryTitle }).then((res) => {
       const { status } = res;
       if (status === 200) {
-        setText(text);
-        setIsVisible(false);
-        loadCategory();
+        setCategoryTitle(categoryTitle);
+        toast.success('Амжилттай засагдлаа');
       }
     });
+
+    fetcherPost(`categories`, { title: subCategories }).then((res) => {
+      const { status } = res;
+      if (status === 200) {
+        setSubCategories(subCategories);
+        toast.success('Амжилттай засагдлаа');
+      }
+    });
+    setIsVisible(false);
+    loadCategory();
   };
+
   return (
     <>
       <td className="px-4 py-3">
@@ -82,12 +94,12 @@ export function SingleCategory({ category, loadCategory }: MyComponentProps) {
       </td>
 
       <td className="px-4 py-3 text-xs flex flex-wrap">
-        {subCategories?.map((category: any) => {
+        {subCategories?.map((subCategory: any) => {
           return (
-            <div key={category._id} className="mb-3 flex flex-wrap rounded-lg ">
+            <div key={subCategory._id} className="mb-3 flex flex-wrap rounded-lg ">
               <span className="flex flex-wrap pl-2 pr-1 py-1 m-1 justify-between items-center text-xs font-medium rounded-xl cursor-pointer bg-purple-500 text-gray-200 hover:bg-purple-600 hover:text-gray-100 dark:bg-gray-700 dark:text-gray-200 dark:hover:bg-gray-800 dark:hover:text-gray-100">
-                {category.title}
-                <svg onClick={() => handleDeleteSub(category._id)} xmlns="http://www.w3.org/2000/svg" className="h-5 w-4 ml-1 hover:text-gray-300" viewBox="0 0 20 20" fill="currentColor">
+                {subCategory.title}
+                <svg onClick={() => handleDeleteSub(subCategory._id)} xmlns="http://www.w3.org/2000/svg" className="h-5 w-4 ml-1 hover:text-gray-300" viewBox="0 0 20 20" fill="currentColor">
                   <path
                     fillRule="evenodd"
                     d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z"
@@ -134,7 +146,7 @@ export function SingleCategory({ category, loadCategory }: MyComponentProps) {
                   <h3 className="text-3xl font-semibold">Ангилал засах</h3>
                 </div>
 
-                <div className="m-[1rem] p-[1rem] grid grid-cols-1 gap-10">
+                <div className="m-[1rem] px-[1rem] grid grid-cols-1 gap-10">
                   <div>
                     <label htmlFor="title" className="block mb-2 font-medium text-gray-700">
                       Ангилал
@@ -142,7 +154,7 @@ export function SingleCategory({ category, loadCategory }: MyComponentProps) {
                     <input
                       value={categoryTitle}
                       onChange={(e: any) => setCategoryTitle(e.target.value)}
-                      placeholder="  Дэд ангилалын нэрээ оруулна уу"
+                      placeholder=" Aнгилалын нэрээ оруулна уу"
                       type="text"
                       name="title"
                       className="block w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
@@ -150,10 +162,33 @@ export function SingleCategory({ category, loadCategory }: MyComponentProps) {
                   </div>
 
                   <div>
-                    <label className="block mb-2 font-medium text-gray-700">Дэд ангилал</label>
-
-                    <CreatableSelect isMulti options={options} value={selectedOptions} onChange={setSelectedOptions} onCreateOption={handleCreateOption} />
+                    <label htmlFor="title" className="block mb-2 font-medium text-gray-700">
+                      Дэд Ангилал
+                    </label>
+                    <input
+                      onKeyDown={handleKeyDown}
+                      placeholder="Дэд ангилалын нэрээ оруулна уу"
+                      type="text"
+                      name="title"
+                      className="block w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+                    />
                   </div>
+                </div>
+                <div className="mx-[1rem] px-[1rem]">
+                  {subCategories?.map((subCategory: any) => (
+                    <div key={subCategory._id} className="flex gap-10">
+                      <span className="flex flex-wrap pl-4 pr-2 py-2 m-1 justify-between items-center text-sm font-medium rounded-xl cursor-pointer  text-gray-700 ">
+                        {subCategory.title}
+                        <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 ml-3 hover:text-gray-500" viewBox="0 0 20 20" fill="currentColor">
+                          <path
+                            fillRule="evenodd"
+                            d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z"
+                            clipRule="evenodd"
+                          />
+                        </svg>
+                      </span>
+                    </div>
+                  ))}
                 </div>
 
                 <div className="flex items-center justify-end p-6 border-t border-solid border-slate-200 rounded-b">

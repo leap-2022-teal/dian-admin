@@ -29,6 +29,7 @@ export default function Product(props: any) {
   }
 
   function handleEdit(e: string) {
+    console.log(products);
     const productFilter = products.filter((product: any) => {
       if (product._id === e) {
         return product;
