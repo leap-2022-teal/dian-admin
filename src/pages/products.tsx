@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { fetcherDelete, fetcherGet } from '../../utils/fetcher';
 import ProductModal from '../../components/productModal';
 import { useRouter } from 'next/router';
+import numeral from 'numeral';
 
 export default function Product(props: any) {
   const router = useRouter();
@@ -28,6 +29,7 @@ export default function Product(props: any) {
   }
 
   function handleEdit(e: string) {
+    console.log(products);
     const productFilter = products.filter((product: any) => {
       if (product._id === e) {
         return product;
@@ -104,7 +106,7 @@ export default function Product(props: any) {
                       </div>
                       {isOpen && <div className="mt-4">{product.description.short}</div>}
                     </td>
-                    <td className="px-4 py-3 text-sm">{product.unitPrice}₮</td>
+                    <td className="px-4 py-3 text-sm">{numeral(product.unitPrice).format('0,0.00')}₮</td>
                     <td className="px-4 py-3 text-sm">{product.categoryId?.title}</td>
                     <td className="px-4 py-3 text-sm">{product.brand.title}</td>
                     <td className="px-4 py-3">

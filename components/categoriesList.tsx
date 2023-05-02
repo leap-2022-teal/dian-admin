@@ -1,9 +1,11 @@
+import { ToastContainer } from 'react-toastify';
 import { SingleCategory } from './singleCategory';
 
 export function CategoriesList({ categories, loadCategory }: any) {
   return (
     <>
-      <div className="mt-[2rem] w-full overflow-hidden rounded-lg shadow-xs">
+      <ToastContainer />
+      <div className="mt-[1rem] w-full overflow-hidden rounded-lg shadow-xs">
         <div className="w-full overflow-x-auto">
           <table className="w-full whitespace-no-wrap">
             <thead>
@@ -17,7 +19,7 @@ export function CategoriesList({ categories, loadCategory }: any) {
               {categories?.map((category: any) => {
                 return (
                   <tr key={category._id} className="text-gray-700 dark:text-gray-400">
-                    <SingleCategory category={category} loadCategory={loadCategory} />
+                    <SingleCategory categories={categories} category={category} loadCategory={loadCategory} />
                   </tr>
                 );
               })}
