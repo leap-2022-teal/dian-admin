@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { fetcherPost } from '../utils/fetcher';
 import React from 'react';
 import CreatableSelect from 'react-select/creatable';
+import { toast } from 'react-toastify';
 
 export function CategoriesNew({ loadCategory, categories }: any) {
   const [isVisible, setIsVisible] = useState(false);
@@ -23,7 +24,18 @@ export function CategoriesNew({ loadCategory, categories }: any) {
       if (status === 200) {
         setIsVisible(false);
         setTitle('');
+        setSubTitle('');
         loadCategory();
+        toast.success('Амжилттай нэмэгдлээ', {
+          position: 'top-right',
+          autoClose: 800,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+
+          theme: 'light',
+        });
       }
     });
   };

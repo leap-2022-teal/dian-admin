@@ -18,12 +18,25 @@ export function SingleCategory({ category, loadCategory, categories }: MyCompone
     fetcherGet(`categories/${category._id}`).then((data) => setSubCategories(data));
   }, []);
 
+  function loadSubCategory() {
+    fetcherGet(`categories/${category._id}`).then((data) => setSubCategories(data));
+  }
+
   function handleDelete() {
     if (window.confirm('Устгах уу')) {
       fetcherDelete(`categories/${category._id}`).then((res) => {
         const { status } = res;
         if (status === 200) {
-          toast.success('Амжилттай устгалаа');
+          toast.success('Амжилттай устгалаа', {
+            position: 'top-right',
+            autoClose: 800,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+
+            theme: 'light',
+          });
           loadCategory();
         }
       });
@@ -35,7 +48,32 @@ export function SingleCategory({ category, loadCategory, categories }: MyCompone
       fetcherDelete(`categories/subCategory/${subCategoryId}`).then((res) => {
         const { status } = res;
         if (status === 200) {
-          toast.success('Амжилттай устгалаа');
+          toast.success('Амжилттай устгалаа', {
+            position: 'top-right',
+            autoClose: 800,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+
+            theme: 'light',
+          });
+          loadSubCategory();
+        }
+      });
+    }
+  }
+
+  function handleRemove(index: number, subCategoryId: any) {
+    const newSubCategories = [...subCategories];
+    newSubCategories.splice(index, 1);
+    setSubCategories(newSubCategories);
+
+    if (subCategoryId) {
+      fetcherDelete(`categories/subCategory/${subCategoryId}`).then((res) => {
+        const { status } = res;
+        if (status === 200) {
+          console.log('removed');
         }
       });
     }
@@ -57,9 +95,10 @@ export function SingleCategory({ category, loadCategory, categories }: MyCompone
   };
 
   const handleKeyDown = (event: any) => {
-    if (event.key === 'Enter') {
+    if (event.key === 'Enter' && event.target.value.trim()) {
       event.preventDefault();
       setSubCategories([...subCategories, { title: event.target.value }]);
+      event.target.value = '';
     }
   };
 
@@ -68,18 +107,31 @@ export function SingleCategory({ category, loadCategory, categories }: MyCompone
       const { status } = res;
       if (status === 200) {
         setCategoryTitle(categoryTitle);
-        toast.success('Амжилттай засагдлаа');
+        loadCategory();
       }
     });
 
-    console.log(subCategories);
-    fetcherPost(`categories`, { subCategories }).then((res) => {
-      console.log(subCategories);
+    subCategories.forEach((subCategory: any) => {
+      if (!subCategory.parentId) {
+        subCategory.parentId = category._id;
+      }
+    });
+
+    fetcherPost(`categories/subCategory`, subCategories).then((res) => {
       const { status } = res;
       if (status === 200) {
         setSubCategories(subCategories);
-        toast.success('Амжилттай засагдлаа');
       }
+    });
+    toast.success('Амжилттай засагдлаа', {
+      position: 'top-right',
+      autoClose: 800,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+
+      theme: 'light',
     });
     setIsVisible(false);
     loadCategory();
@@ -177,11 +229,17 @@ export function SingleCategory({ category, loadCategory, categories }: MyCompone
                   </div>
                 </div>
                 <div className="mx-[1rem] px-[1rem]">
-                  {subCategories?.map((subCategory: any) => (
-                    <div key={subCategory._id} className="flex gap-10">
+                  {subCategories?.map((subCategory: any, index: number) => (
+                    <div key={index} className="flex gap-10">
                       <span className="flex flex-wrap pl-4 pr-2 py-2 m-1 justify-between items-center text-sm font-medium rounded-xl cursor-pointer  text-gray-700 ">
                         {subCategory.title}
-                        <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 ml-3 hover:text-gray-500" viewBox="0 0 20 20" fill="currentColor">
+                        <svg
+                          onClick={(e) => handleRemove(index, subCategory._id)}
+                          xmlns="http://www.w3.org/2000/svg"
+                          className="h-5 w-5 ml-3 hover:text-gray-500"
+                          viewBox="0 0 20 20"
+                          fill="currentColor"
+                        >
                           <path
                             fillRule="evenodd"
                             d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z"
