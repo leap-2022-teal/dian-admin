@@ -3,6 +3,7 @@ import { fetcherDelete, fetcherGet } from '../../utils/fetcher';
 import ProductModal from '../../components/productModal';
 import { useRouter } from 'next/router';
 import numeral from 'numeral';
+import Pagination from '../../components/pagination';
 
 export default function Product(props: any) {
   const router = useRouter();
@@ -13,7 +14,7 @@ export default function Product(props: any) {
   const [categories, setCategories] = useState();
 
   useEffect(() => {
-    fetcherGet(`products`).then((data) => setProducts(data));
+    fetcherGet(`products?page=1&limit=10`).then((data) => setProducts(data));
   }, []);
 
   function loadProduct() {
@@ -83,7 +84,7 @@ export default function Product(props: any) {
           <div className="w-full overflow-x-auto">
             <table className="w-full whitespace-no-wrap">
               <thead>
-                <tr className="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800">
+                <tr className="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b  bg-gray-50">
                   <th className="px-4 py-3">Products</th>
                   <th className="px-4 py-3">Price</th>
                   <th className="px-4 py-3">Category</th>
@@ -91,9 +92,9 @@ export default function Product(props: any) {
                   <th className="px-4 py-3">Actions</th>
                 </tr>
               </thead>
-              <tbody className="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800">
+              <tbody className="bg-white divide-y">
                 {products?.map((product: any) => (
-                  <tr key={product._id} className="text-gray-700 dark:text-gray-400">
+                  <tr key={product._id} className="text-gray-700 ">
                     <td className="px-4 py-3">
                       <div className="flex items-center text-sm">
                         <div className="relative hidden w-8 h-8 mr-3 rounded-full md:block">
@@ -113,7 +114,7 @@ export default function Product(props: any) {
                       <div className="flex items-center space-x-4 text-sm">
                         <button
                           onClick={() => handleEdit(product._id)}
-                          className="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-purple-600 rounded-lg dark:text-gray-400 focus:outline-none focus:shadow-outline-gray"
+                          className="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-purple-600 rounded-lg  focus:outline-none focus:shadow-outline-gray"
                           aria-label="Edit"
                         >
                           <svg className="w-5 h-5" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20">
@@ -122,7 +123,7 @@ export default function Product(props: any) {
                         </button>
                         <button
                           onClick={() => handleDelete(product._id)}
-                          className="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-purple-600 rounded-lg dark:text-gray-400 focus:outline-none focus:shadow-outline-gray"
+                          className="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-purple-600 rounded-lg focus:outline-none focus:shadow-outline-gray"
                           aria-label="Delete"
                         >
                           <svg className="w-5 h-5" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20">
@@ -139,6 +140,7 @@ export default function Product(props: any) {
                 ))}
               </tbody>
             </table>
+            <Pagination />
           </div>
         </div>
       </div>

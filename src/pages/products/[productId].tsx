@@ -75,7 +75,7 @@ export default function SingleProducts({ product }: any, props: any) {
     <div>
       {variant === 'edit' ? (
         <>
-          <img src={product.imageUrl} />
+          <img src={product?.imageUrl} />
           <h3 className="truncate text-slate-800">{product?.title}</h3>
           <p>{category?.title}</p>
           <p>{product.unitPrice}</p>
