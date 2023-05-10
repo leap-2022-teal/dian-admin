@@ -12,13 +12,15 @@ export default function Product(props: any) {
   const [variant, setVariant] = useState('');
   const [editingProduct, setEditingProduct] = useState<any>();
   const [categories, setCategories] = useState();
+  const [page, setPage] = useState(1);
 
   useEffect(() => {
-    fetcherGet(`products?page=1&limit=10`).then((data) => setProducts(data));
-  }, []);
+    fetcherGet(`products?page=${page}&limit=10`).then((data) => setProducts(data));
+  }, [page]);
 
   function loadProduct() {
     fetcherGet(`products`).then((data) => setProducts(data));
+    setPage(1);
   }
 
   useEffect(() => {
@@ -52,6 +54,7 @@ export default function Product(props: any) {
         if (status === 200) {
           router.push('/products');
           loadProduct();
+          setPage(page);
         }
       });
     }
@@ -140,7 +143,7 @@ export default function Product(props: any) {
                 ))}
               </tbody>
             </table>
-            <Pagination />
+            <Pagination currentPage={page} totalPages={10} onPageChange={setPage} />
           </div>
         </div>
       </div>

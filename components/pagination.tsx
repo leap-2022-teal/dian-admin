@@ -1,7 +1,11 @@
 import { useRouter } from 'next/router';
 
-export default function Pagination() {
+export default function Pagination({ currentPage, totalPages, onPageChange }: any) {
   const router = useRouter();
+
+  function handlePageChange(pageNumber: number) {
+    router.push(`products?page=${pageNumber}`);
+  }
   return (
     <>
       <div className="grid px-4 py-3 text-xs font-semibold tracking-wide text-gray-500 uppercase border-t dark:border-gray-700 bg-gray-50 sm:grid-cols-9 dark:text-gray-400 dark:bg-gray-800">
@@ -18,7 +22,14 @@ export default function Pagination() {
                 </button>
               </li>
               <li>
-                <button className="px-3 py-1 rounded-md focus:outline-none focus:shadow-outline-purple">1</button>
+                <button onClick={() => handlePageChange(1)} className="px-3 py-1 rounded-md focus:outline-none focus:shadow-outline-purple">
+                  1
+                </button>
+              </li>
+              <li>
+                <button onClick={() => handlePageChange(currentPage + 1)} className="px-3 py-1 rounded-md focus:outline-none focus:shadow-outline-purple">
+                  2
+                </button>
               </li>
               <li>
                 <button className="px-3 py-1 text-white transition-colors duration-150 bg-purple-600 border border-r-0 border-purple-600 rounded-md focus:outline-none focus:shadow-outline-purple">
@@ -26,16 +37,22 @@ export default function Pagination() {
                 </button>
               </li>
               <li>
-                <button className="px-3 py-1 rounded-md focus:outline-none focus:shadow-outline-purple">4</button>
+                <button onClick={() => handlePageChange(4)} className="px-3 py-1 rounded-md focus:outline-none focus:shadow-outline-purple">
+                  4
+                </button>
               </li>
               <li>
                 <span className="px-3 py-1">...</span>
               </li>
               <li>
-                <button className="px-3 py-1 rounded-md focus:outline-none focus:shadow-outline-purple">8</button>
+                <button onClick={() => handlePageChange(8)} className="px-3 py-1 rounded-md focus:outline-none focus:shadow-outline-purple">
+                  8
+                </button>
               </li>
               <li>
-                <button className="px-3 py-1 rounded-md focus:outline-none focus:shadow-outline-purple">9</button>
+                <button onClick={() => handlePageChange(9)} className="px-3 py-1 rounded-md focus:outline-none focus:shadow-outline-purple">
+                  9
+                </button>
               </li>
               <li>
                 <button className="px-3 py-1 rounded-md rounded-r-lg focus:outline-none focus:shadow-outline-purple" aria-label="Next">
