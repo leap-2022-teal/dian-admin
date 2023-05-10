@@ -26,18 +26,13 @@ export default function Product() {
   }, [loadProduct]);
 
   useEffect(() => {
-    console.log('hooked', page);
-  }, [page]);
-
-  useEffect(() => {
-    console.log({ page, isReady: router.isReady });
+    // console.log({ page, isReady: router.isReady });
     if (router.isReady) {
       fetcherGet(`products/pagination?page=${page ?? 1}&limit=${limit}`).then((data) => {
         setProducts(data);
       });
     }
   }, [page]);
-  console.log(products[0]);
 
   function loadProduct() {
     fetcherGet(`products/pagination?page=${page}&limit=${limit}`).then((data) => {

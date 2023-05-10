@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import { useState } from 'react';
 
 export default function Pagination({ limit, totalProducts, indexOfFirstPost, indexOfLastPost, previousPage, nextPage, currentPage }: any) {
   const pageNumber = [];
@@ -7,6 +8,7 @@ export default function Pagination({ limit, totalProducts, indexOfFirstPost, ind
   for (let i = 1; i <= pageCount; i++) {
     pageNumber.push(i);
   }
+
   return (
     <>
       <div className="grid px-4 py-3 text-xs font-semibold tracking-wide text-gray-500 uppercase border-t dark:border-gray-700 bg-gray-50 sm:grid-cols-9 dark:text-gray-400 dark:bg-gray-800">
@@ -24,20 +26,49 @@ export default function Pagination({ limit, totalProducts, indexOfFirstPost, ind
                   </svg>
                 </button>
               </li>
-              {pageNumber.map((page) => (
-                <li key={page}>
-                  <Link
-                    href={`products?page=${page}`}
-                    className={`px-3 py-1 rounded-md focus:outline-none focus:shadow-outline-purple ${
-                      Number(currentPage) === page
-                        ? 'text-white transition-colors duration-150 bg-purple-600 border border-r-0 border-purple-600 rounded-md focus:outline-none focus:shadow-outline-purple'
-                        : ''
-                    }`}
-                  >
-                    {page}
-                  </Link>
-                </li>
-              ))}
+
+              {pageNumber.map((page) => {
+                if (
+                  page <= 2 ||
+                  (page >= Number(currentPage) - 2 && page <= Number(currentPage) + 2) ||
+                  (page >= pageCount - 1 && page <= pageCount) ||
+                  (page === 3 && Number(currentPage) === 1) ||
+                  (page === pageCount - 2 && Number(currentPage) === pageCount)
+                ) {
+                  return (
+                    <li key={page}>
+                      <Link
+                        href={`products?page=${page}`}
+                        className={`px-3 py-1 rounded-md focus:outline-none focus:shadow-outline-purple ${
+                          Number(currentPage) === page
+                            ? 'text-white transition-colors duration-150 bg-purple-600 border border-r-0 border-purple-600 rounded-md focus:outline-none focus:shadow-outline-purple'
+                            : ''
+                        }`}
+                      >
+                        {page}
+                      </Link>
+                    </li>
+                  );
+                } else if (page === 3 && pageCount > 5 && Number(currentPage) !== 1) {
+                  return (
+                    <li key={page}>
+                      <button className="px-3 py-1 rounded-md focus:outline-none focus:shadow-outline-purple" onClick={previousPage}>
+                        ...
+                      </button>
+                    </li>
+                  );
+                } else if (page === pageCount - 2 && pageCount > 5 && Number(currentPage) !== pageCount) {
+                  return (
+                    <li key={page}>
+                      <button className="px-3 py-1 rounded-md focus:outline-none focus:shadow-outline-purple" onClick={nextPage}>
+                        ...
+                      </button>
+                    </li>
+                  );
+                } else {
+                  return null;
+                }
+              })}
 
               <li>
                 <button onClick={nextPage} className="px-3 py-1 rounded-md rounded-r-lg focus:outline-none focus:shadow-outline-purple" aria-label="Next">
