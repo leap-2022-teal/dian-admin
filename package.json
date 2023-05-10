@@ -12,6 +12,7 @@
     "@ckeditor/ckeditor5-build-classic": "^37.0.1",
     "@ckeditor/ckeditor5-react": "^6.0.0",
     "@headlessui/react": "^1.7.14",
+    "@nextui-org/react": "^1.0.0-beta.12",
     "@types/node": "18.15.11",
     "@types/react": "18.0.33",
     "@types/react-dom": "18.0.11",

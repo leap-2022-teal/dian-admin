@@ -5,22 +5,57 @@ import { useRouter } from 'next/router';
 import numeral from 'numeral';
 import Pagination from '../../components/pagination';
 
-export default function Product(props: any) {
+export default function Product() {
   const router = useRouter();
   const [isOpen, setIsOpen] = useState(false);
-  const [products, setProducts] = useState(props.categories);
+  const [products, setProducts] = useState([]);
   const [variant, setVariant] = useState('');
   const [editingProduct, setEditingProduct] = useState<any>();
   const [categories, setCategories] = useState();
-  const [page, setPage] = useState(1);
+  const [limit] = useState(15);
+  const [totalProducts, setTotalProducts] = useState(0);
+  let { page }: any = router.query;
+
+  const indexOfLastPost = page * limit;
+  const indexOfFirstPost = indexOfLastPost - limit;
 
   useEffect(() => {
-    fetcherGet(`products?page=${page}&limit=10`).then((data) => setProducts(data));
+    fetcherGet(`products`).then((data) => {
+      setTotalProducts(data.length);
+    });
+  }, [loadProduct]);
+
+  useEffect(() => {
+    console.log('hooked', page);
   }, [page]);
 
+  useEffect(() => {
+    console.log({ page, isReady: router.isReady });
+    if (router.isReady) {
+      fetcherGet(`products/pagination?page=${page ?? 1}&limit=${limit}`).then((data) => {
+        setProducts(data);
+      });
+    }
+  }, [page]);
+  console.log(products[0]);
+
   function loadProduct() {
-    fetcherGet(`products`).then((data) => setProducts(data));
-    setPage(1);
+    fetcherGet(`products/pagination?page=${page}&limit=${limit}`).then((data) => {
+      setProducts(data);
+    });
+    // page = 1;
+  }
+
+  function previousPage() {
+    if (page !== 1) {
+      page = page - 1;
+    }
+  }
+
+  function nextPage() {
+    if (page !== Math.floor(totalProducts / limit)) {
+      page = page - 1;
+    }
   }
 
   useEffect(() => {
@@ -54,7 +89,6 @@ export default function Product(props: any) {
         if (status === 200) {
           router.push('/products');
           loadProduct();
-          setPage(page);
         }
       });
     }
@@ -143,7 +177,15 @@ export default function Product(props: any) {
                 ))}
               </tbody>
             </table>
-            <Pagination currentPage={page} totalPages={10} onPageChange={setPage} />
+            <Pagination
+              limit={limit}
+              totalProducts={totalProducts}
+              indexOfLastPost={indexOfLastPost}
+              indexOfFirstPost={indexOfFirstPost}
+              previousPage={previousPage}
+              nextPage={nextPage}
+              currentPage={page}
+            />
           </div>
         </div>
       </div>
