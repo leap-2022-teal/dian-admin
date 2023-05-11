@@ -1,17 +1,25 @@
 import Link from 'next/link';
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { fetcherGet } from '../utils/fetcher';
+import { UserContext, UserProvider } from './userProvider';
+import { Main } from 'next/document';
+import { useRouter } from 'next/router';
 
 export default function Layout({ children }: any) {
   const [show, setShow] = useState(false);
   const [profile, setProfile] = useState(false);
+  const user = useContext(UserContext);
+  const router = useRouter();
   const [menu, setMenu] = useState(false);
   const [menu1, setMenu1] = useState(false);
   const [menu2, setMenu2] = useState(false);
   const [menu3, setMenu3] = useState(false);
-
-  return (
-    <>
+  if (user === undefined) {
+    return null;
+  } else if (user === null) {
+    router.push('/login');
+  } else {
+    return (
       <div className="w-full h-full bg-gray-200">
         <div className="flex flex-no-wrap">
           {/* Sidebar starts */}
@@ -445,6 +453,6 @@ export default function Layout({ children }: any) {
           </div>
         </div>
       </div>
-    </>
-  );
+    );
+  }
 }
