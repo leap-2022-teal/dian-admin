@@ -4,6 +4,7 @@ import ProductModal from '../../components/productModal';
 import { useRouter } from 'next/router';
 import numeral from 'numeral';
 import Pagination from '../../components/pagination';
+import Layout from '../../components/layout';
 
 export default function Product() {
   const router = useRouter();
@@ -99,7 +100,7 @@ export default function Product() {
   }
 
   return (
-    <>
+    <Layout>
       <div className="m-[2rem]">
         <button
           onClick={handleCreate}
@@ -184,6 +185,6 @@ export default function Product() {
           </div>
         </div>
       </div>
-    </>
+    </Layout>
   );
 }
