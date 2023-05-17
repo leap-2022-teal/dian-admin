@@ -17,7 +17,7 @@ export function useCurrentUser() {
 
     if (token) {
       axios
-        .get('http://localhost:8000/users/me', {
+        .get(`${process.env.NEXT_PUBLIC_API_URL}/users/me`, {
           headers: { Authorization: `Bearer ${token}` },
         })
         .then((res: any) => {
