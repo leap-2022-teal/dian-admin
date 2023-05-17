@@ -19,7 +19,7 @@ export default function Layout({ children }: any) {
     router.push('/login');
   }
   return (
-    <div className="w-full h-full bg-gray-200">
+    <div className="w-screen h-screen bg-gray-200">
       {user && (
         <div className="flex flex-no-wrap">
           {/* Sidebar starts */}
@@ -32,7 +32,7 @@ export default function Layout({ children }: any) {
                 />
               </svg>
             </div>
-            <ul aria-orientation="vertical" className=" py-6">
+            <ul aria-orientation="vertical" className=" py-6 h-[95vh]">
               <Link href={'/'}>
                 <li className="pl-6 cursor-pointer text-gray-600 text-sm leading-3 tracking-normal pb-4 pt-5 hover:text-indigo-700 focus:text-indigo-700 focus:outline-none">
                   <div className="flex items-center">
