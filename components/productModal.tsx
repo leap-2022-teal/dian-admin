@@ -1,6 +1,6 @@
-import { useEffect, useState } from 'react';
-import { fetcherPost, fetcherPostFile, fetcherPut } from '../utils/fetcher';
+import { useState } from 'react';
 import AsyncSelect from 'react-select/async';
+import { fetcherPost, fetcherPostFile, fetcherPut } from '../utils/fetcher';
 
 // 6. description drop
 
@@ -19,7 +19,7 @@ interface CategoryOption {
   label: string;
 }
 
-export default function ProductModal({ variant, editingProduct, handleClose, products, loadProduct, loadCategory, categories }: MyComponentProps) {
+export default function ProductModal({ variant, editingProduct, handleClose, loadProduct, categories }: MyComponentProps) {
   const [title, setTitle] = useState('');
   const [image, setImage] = useState<any>();
   const [price, setPrice] = useState(0);
@@ -28,22 +28,18 @@ export default function ProductModal({ variant, editingProduct, handleClose, pro
   const [categoryId, setCategoryId] = useState<CategoryOption>();
 
   if (variant === 'creating') {
-    useEffect(() => {
-      setTitle('');
-      setPrice(0);
-      setBrand('');
-      setDescription('');
-    }, []);
+    setTitle('');
+    setPrice(0);
+    setBrand('');
+    setDescription('');
   }
 
   if (variant === 'editing') {
-    useEffect(() => {
-      setTitle(editingProduct?.title);
-      setPrice(editingProduct?.unitPrice);
-      setBrand(editingProduct?.brand.title);
-      setDescription(editingProduct?.description.short);
-      setCategoryId({ value: editingProduct?.categoryId, label: editingProduct?.categoryId?.title });
-    }, []);
+    setTitle(editingProduct?.title);
+    setPrice(editingProduct?.unitPrice);
+    setBrand(editingProduct?.brand.title);
+    setDescription(editingProduct?.description.short);
+    setCategoryId({ value: editingProduct?.categoryId, label: editingProduct?.categoryId?.title });
   }
 
   const categoriesList = categories?.map((category: any) => {
