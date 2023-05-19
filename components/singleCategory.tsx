@@ -15,11 +15,11 @@ export function SingleCategory({ category, loadCategory, categories }: MyCompone
   const [categoryTitle, setCategoryTitle] = useState();
 
   useEffect(() => {
-    fetcherGet(`categories/${category._id}`).then((data) => setSubCategories(data));
+    fetcherGet(`categories/subCategory/${category._id}`).then((data) => setSubCategories(data));
   }, []);
 
   function loadSubCategory() {
-    fetcherGet(`categories/${category._id}`).then((data) => setSubCategories(data));
+    fetcherGet(`categories/subCategory/${category._id}`).then((data) => setSubCategories(data));
   }
 
   function handleDelete() {

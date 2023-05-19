@@ -1,9 +1,8 @@
 import { useEffect, useState } from 'react';
-import Layout from '../../components/layout';
-import { fetcherGet, fetcherDelete } from '../../utils/fetcher';
-import { toast } from 'react-toastify';
-import { ToastContainer } from 'react-toastify';
+import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import Layout from '../../components/layout';
+import { fetcherDelete, fetcherGet } from '../../utils/fetcher';
 
 export default function User() {
   const [users, setUsers] = useState<any>();
@@ -51,7 +50,7 @@ export default function User() {
         </thead>
         <tbody className="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800">
           {users?.map((user: any) => (
-            <tr className="text-gray-700 dark:text-gray-400">
+            <tr key={user._id} className="text-gray-700 dark:text-gray-400">
               <td className="px-4 py-3">
                 <div className="flex items-center text-sm">
                   <div className="relative hidden w-8 h-8 mr-3 rounded-full md:block">

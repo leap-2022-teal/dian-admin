@@ -19,7 +19,7 @@ export default function Layout({ children }: any) {
     router.push('/login');
   }
   return (
-    <div className="w-full h-full bg-gray-200">
+    <div className="w-screen h-screen bg-gray-200">
       {user && (
         <div className="flex flex-no-wrap">
           {/* Sidebar starts */}
@@ -32,7 +32,7 @@ export default function Layout({ children }: any) {
                 />
               </svg>
             </div>
-            <ul aria-orientation="vertical" className=" py-6">
+            <ul aria-orientation="vertical" className=" py-6 h-[95vh]">
               <Link href={'/'}>
                 <li className="pl-6 cursor-pointer text-gray-600 text-sm leading-3 tracking-normal pb-4 pt-5 hover:text-indigo-700 focus:text-indigo-700 focus:outline-none">
                   <div className="flex items-center">
@@ -130,128 +130,78 @@ export default function Layout({ children }: any) {
                     </div>
                   </div>
                   <ul aria-orientation="vertical" className=" py-6">
-                    <li className="pl-6 cursor-pointer text-white text-sm leading-3 tracking-normal pb-4 pt-5 focus:text-indigo-700 focus:outline-none">
-                      <div className="flex items-center">
-                        <div className="w-6 h-6 md:w-8 md:h-8">
-                          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-6 h-6">
-                            <path
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                              d="M2.25 12l8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25"
-                            />
-                          </svg>
+                    <Link href={'/'}>
+                      <li className="pl-6 cursor-pointer text-white text-sm leading-3 tracking-normal pb-4 pt-5 focus:text-indigo-700 focus:outline-none">
+                        <div className="flex items-center">
+                          <div className="w-6 h-6 md:w-8 md:h-8">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-6 h-6">
+                              <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                d="M2.25 12l8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25"
+                              />
+                            </svg>
+                          </div>
+                          <span className="ml-2 xl:text-base md:text-2xl text-base">Эхлэл</span>
                         </div>
-                        <span className="ml-2 xl:text-base md:text-2xl text-base">Эхлэл</span>
-                      </div>
-                    </li>
-                    <li className="pl-6 cursor-pointer text-gray-600 text-sm leading-3 tracking-normal mt-4 mb-4 py-2 hover:text-indigo-700 focus:text-indigo-700 focus:outline-none">
-                      <div className="flex items-center">
-                        <div className="w-6 h-6 md:w-8 md:h-8">
-                          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-6 h-6">
-                            <path strokeLinecap="round" strokeLinejoin="round" d="M21 7.5l-9-5.25L3 7.5m18 0l-9 5.25m9-5.25v9l-9 5.25M3 7.5l9 5.25M3 7.5v9l9 5.25m0-9v9" />
-                          </svg>
+                      </li>
+                    </Link>
+
+                    <Link href={'/products'}>
+                      <li className="pl-6 cursor-pointer text-gray-600 text-sm leading-3 tracking-normal mt-4 mb-4 py-2 hover:text-indigo-700 focus:text-indigo-700 focus:outline-none">
+                        <div className="flex items-center">
+                          <div className="w-6 h-6 md:w-8 md:h-8">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-6 h-6">
+                              <path strokeLinecap="round" strokeLinejoin="round" d="M21 7.5l-9-5.25L3 7.5m18 0l-9 5.25m9-5.25v9l-9 5.25M3 7.5l9 5.25M3 7.5v9l9 5.25m0-9v9" />
+                            </svg>
+                          </div>
+                          <span className="ml-2 xl:text-base md:text-2xl text-base">Бараа бүтээгдэхүүн</span>
                         </div>
-                        <span className="ml-2 xl:text-base md:text-2xl text-base">Бараа бүтээгдэхүүн</span>
-                      </div>
-                    </li>
-                    <li className="pl-6 cursor-pointer text-gray-600 text-sm leading-3 tracking-normal mb-4 py-2 hover:text-indigo-700 focus:text-indigo-700 focus:outline-none">
-                      <div className="flex items-center">
-                        <div className="w-6 h-6 md:w-8 md:h-8">
-                          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-6 h-6">
-                            <path
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                              d="M12 3c2.755 0 5.455.232 8.083.678.533.09.917.556.917 1.096v1.044a2.25 2.25 0 01-.659 1.591l-5.432 5.432a2.25 2.25 0 00-.659 1.591v2.927a2.25 2.25 0 01-1.244 2.013L9.75 21v-6.568a2.25 2.25 0 00-.659-1.591L3.659 7.409A2.25 2.25 0 013 5.818V4.774c0-.54.384-1.006.917-1.096A48.32 48.32 0 0112 3z"
-                            />
-                          </svg>
+                      </li>
+                    </Link>
+
+                    <Link href={'/categories'}>
+                      <li className="pl-6 cursor-pointer text-gray-600 text-sm leading-3 tracking-normal mb-4 py-2 hover:text-indigo-700 focus:text-indigo-700 focus:outline-none">
+                        <div className="flex items-center">
+                          <div className="w-6 h-6 md:w-8 md:h-8">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-6 h-6">
+                              <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                d="M12 3c2.755 0 5.455.232 8.083.678.533.09.917.556.917 1.096v1.044a2.25 2.25 0 01-.659 1.591l-5.432 5.432a2.25 2.25 0 00-.659 1.591v2.927a2.25 2.25 0 01-1.244 2.013L9.75 21v-6.568a2.25 2.25 0 00-.659-1.591L3.659 7.409A2.25 2.25 0 013 5.818V4.774c0-.54.384-1.006.917-1.096A48.32 48.32 0 0112 3z"
+                              />
+                            </svg>
+                          </div>
+                          <span className="ml-2 xl:text-base md:text-2xl text-base">Ангилал</span>
                         </div>
-                        <span className="ml-2 xl:text-base md:text-2xl text-base">Ангилал</span>
-                      </div>
-                    </li>
-                    <li className="pl-6 cursor-pointer text-gray-600 text-sm leading-3 tracking-normal py-2 hover:text-indigo-700 focus:text-indigo-700 focus:outline-none">
-                      <div className="flex items-center">
-                        <div className="w-6 h-6 md:w-8 md:h-8">
-                          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-6 h-6">
-                            <path
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                              d="M15 19.128a9.38 9.38 0 002.625.372 9.337 9.337 0 004.121-.952 4.125 4.125 0 00-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 018.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0111.964-3.07M12 6.375a3.375 3.375 0 11-6.75 0 3.375 3.375 0 016.75 0zm8.25 2.25a2.625 2.625 0 11-5.25 0 2.625 2.625 0 015.25 0z"
-                            />
-                          </svg>
+                      </li>
+                    </Link>
+
+                    <Link href={'/users'}>
+                      <li className="pl-6 cursor-pointer text-gray-600 text-sm leading-3 tracking-normal py-2 hover:text-indigo-700 focus:text-indigo-700 focus:outline-none">
+                        <div className="flex items-center">
+                          <div className="w-6 h-6 md:w-8 md:h-8">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-6 h-6">
+                              <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                d="M15 19.128a9.38 9.38 0 002.625.372 9.337 9.337 0 004.121-.952 4.125 4.125 0 00-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 018.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0111.964-3.07M12 6.375a3.375 3.375 0 11-6.75 0 3.375 3.375 0 016.75 0zm8.25 2.25a2.625 2.625 0 11-5.25 0 2.625 2.625 0 015.25 0z"
+                              />
+                            </svg>
+                          </div>
+                          <span className="ml-2 xl:text-base md:text-2xl text-base">Хэрэглэгч</span>
                         </div>
-                        <span className="ml-2 xl:text-base md:text-2xl text-base">Хэрэглэгч</span>
-                      </div>
-                    </li>
+                      </li>
+                    </Link>
                   </ul>
                 </div>
                 <div className="w-full">
-                  <div className="flex justify-center mb-4 w-full px-6">
-                    <div className="relative w-full">
-                      <div className="text-gray-500 absolute ml-4 inset-0 m-auto w-4 h-4">
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          className="icon icon-tabler icon-tabler-search"
-                          width={16}
-                          height={16}
-                          viewBox="0 0 24 24"
-                          strokeWidth={1}
-                          stroke="#A0AEC0"
-                          fill="none"
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                        >
-                          <path stroke="none" d="M0 0h24v24H0z" />
-                          <circle cx={10} cy={10} r={7} />
-                          <line x1={21} y1={21} x2={15} y2={15} />
-                        </svg>
-                      </div>
-                      <input className="bg-gray-200 focus:outline-none rounded w-full text-sm text-gray-500  pl-10 py-2" type="text" placeholder="Search" />
-                    </div>
-                  </div>
                   <div className="border-t border-gray-300">
                     <div className="w-full flex items-center justify-between px-6 pt-1">
                       <div className="flex items-center">
                         <img alt="profile-pic" src="https://tuk-cdn.s3.amazonaws.com/assets/components/boxed_layout/bl_1.png" className="w-8 h-8 rounded-md" />
-                        <p className="md:text-xl text-gray-800 text-base leading-4 ml-2">Jane Doe</p>
+                        <p className="md:text-xl text-gray-800 text-base leading-4 ml-2">{user.email}</p>
                       </div>
-                      <ul className="flex">
-                        <li className="cursor-pointer text-white pt-5 pb-3">
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            className="icon icon-tabler icon-tabler-messages"
-                            width={24}
-                            height={24}
-                            viewBox="0 0 24 24"
-                            strokeWidth={1}
-                            stroke="#718096"
-                            fill="none"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                          >
-                            <path stroke="none" d="M0 0h24v24H0z" />
-                            <path d="M21 14l-3 -3h-7a1 1 0 0 1 -1 -1v-6a1 1 0 0 1 1 -1h9a1 1 0 0 1 1 1v10" />
-                            <path d="M14 15v2a1 1 0 0 1 -1 1h-7l-3 3v-10a1 1 0 0 1 1 -1h2" />
-                          </svg>
-                        </li>
-                        <li className="cursor-pointer text-white pt-5 pb-3 pl-3">
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            className="icon icon-tabler icon-tabler-bell"
-                            width={24}
-                            height={24}
-                            viewBox="0 0 24 24"
-                            strokeWidth={1}
-                            stroke="#718096"
-                            fill="none"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                          >
-                            <path stroke="none" d="M0 0h24v24H0z" />
-                            <path d="M10 5a2 2 0 0 1 4 0a7 7 0 0 1 4 6v3a4 4 0 0 0 2 3h-16a4 4 0 0 0 2 -3v-3a7 7 0 0 1 4 -6" />
-                            <path d="M9 17v1a3 3 0 0 0 6 0v-1" />
-                          </svg>
-                        </li>
-                      </ul>
                     </div>
                   </div>
                 </div>
@@ -289,72 +239,12 @@ export default function Layout({ children }: any) {
                 </div>
                 <div className="w-1/2 hidden lg:flex">
                   <div className="w-full flex items-center pl-8 justify-end">
-                    <div className="h-full w-20 flex items-center justify-center border-r border-l">
-                      <div className="relative cursor-pointer text-gray-600">
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          className="icon icon-tabler icon-tabler-bell"
-                          width={28}
-                          height={28}
-                          viewBox="0 0 24 24"
-                          strokeWidth="1.5"
-                          stroke="currentColor"
-                          fill="none"
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                        >
-                          <path stroke="none" d="M0 0h24v24H0z" />
-                          <path d="M10 5a2 2 0 0 1 4 0a7 7 0 0 1 4 6v3a4 4 0 0 0 2 3h-16a4 4 0 0 0 2 -3v-3a7 7 0 0 1 4 -6" />
-                          <path d="M9 17v1a3 3 0 0 0 6 0v-1" />
-                        </svg>
-                        <div className="w-2 h-2 rounded-full bg-red-400 border border-white absolute inset-0 mt-1 mr-1 m-auto" />
-                      </div>
-                    </div>
-                    <div className="h-full w-20 flex items-center justify-center border-r mr-4 cursor-pointer text-gray-600">
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        className="icon icon-tabler icon-tabler-messages"
-                        width={28}
-                        height={28}
-                        viewBox="0 0 24 24"
-                        strokeWidth="1.5"
-                        stroke="currentColor"
-                        fill="none"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                      >
-                        <path stroke="none" d="M0 0h24v24H0z" />
-                        <path d="M21 14l-3 -3h-7a1 1 0 0 1 -1 -1v-6a1 1 0 0 1 1 -1h9a1 1 0 0 1 1 1v10" />
-                        <path d="M14 15v2a1 1 0 0 1 -1 1h-7l-3 3v-10a1 1 0 0 1 1 -1h2" />
-                      </svg>
-                    </div>
                     <div className="flex items-center relative cursor-pointer" onClick={() => setProfile(!profile)}>
                       <div className="rounded-full">
                         {profile ? (
                           <ul className="p-2 w-full border-r bg-white absolute rounded left-0 shadow mt-12 sm:mt-16 ">
-                            <li className="flex w-full justify-between text-gray-600 hover:text-indigo-700 cursor-pointer items-center">
-                              <div className="flex items-center">
-                                <svg
-                                  xmlns="http://www.w3.org/2000/svg"
-                                  className="icon icon-tabler icon-tabler-user"
-                                  width={18}
-                                  height={18}
-                                  viewBox="0 0 24 24"
-                                  strokeWidth="1.5"
-                                  stroke="currentColor"
-                                  fill="none"
-                                  strokeLinecap="round"
-                                  strokeLinejoin="round"
-                                >
-                                  <path stroke="none" d="M0 0h24v24H0z" />
-                                  <circle cx={12} cy={7} r={4} />
-                                  <path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
-                                </svg>
-                                <span className="text-sm ml-2">My Profile</span>
-                              </div>
-                            </li>
                             <li className="flex w-full justify-between text-gray-600 hover:text-indigo-700 cursor-pointer items-center mt-2">
-                              <div className="flex items-center">
+                              <div className="flex items-center pb-2">
                                 <svg
                                   xmlns="http://www.w3.org/2000/svg"
                                   className="icon icon-tabler icon-tabler-logout"
@@ -385,7 +275,7 @@ export default function Layout({ children }: any) {
                           <div className="w-2 h-2 rounded-full bg-green-400 border border-white absolute inset-0 mb-0 mr-0 m-auto" />
                         </div>
                       </div>
-                      <p className="text-gray-800 text-sm mx-3">Jane Doe</p>
+                      <p className="text-gray-800 text-sm mx-3">{user.email}</p>
                       <div className="cursor-pointer text-gray-600">
                         <svg
                           aria-haspopup="true"
