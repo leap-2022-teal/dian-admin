@@ -5,7 +5,8 @@ import { fetcherGet } from '../../utils/fetcher';
 import Layout from '../../components/layout';
 
 export default function Category(props: any) {
-  const [categories, setCategories] = useState();
+  const [categories, setCategories] = useState<any>();
+
   useEffect(() => {
     fetcherGet(`categories`).then((data) => setCategories(data));
   }, []);

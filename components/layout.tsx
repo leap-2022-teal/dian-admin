@@ -195,16 +195,64 @@ export default function Layout({ children }: any) {
                     </Link>
                   </ul>
                 </div>
-                <div className="w-full">
-                  <div className="border-t border-gray-300">
+                <div className="w-full relative" onClick={() => setProfile(true)}>
+                  <div className="border-t border-gray-300 pt-2">
                     <div className="w-full flex items-center justify-between px-6 pt-1">
                       <div className="flex items-center">
                         <img alt="profile-pic" src="https://tuk-cdn.s3.amazonaws.com/assets/components/boxed_layout/bl_1.png" className="w-8 h-8 rounded-md" />
-                        <p className="md:text-xl text-gray-800 text-base leading-4 ml-2">{user.email}</p>
+                        <p className="md:text-xl text-gray-800 text-base leading-4 ml-2">{user.email}1</p>
+                        <div className="cursor-pointer text-gray-600 ml-3 mt-1">
+                          <svg
+                            aria-haspopup="true"
+                            xmlns="http://www.w3.org/2000/svg"
+                            className="icon icon-tabler icon-tabler-chevron-up"
+                            width={20}
+                            height={20}
+                            viewBox="0 0 24 24"
+                            strokeWidth="1.5"
+                            stroke="currentColor"
+                            fill="none"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                          >
+                            <path stroke="none" d="M0 0h24v24H0z" />
+                            <polyline points="6 15 12 9 18 15" />
+                          </svg>
+                        </div>
                       </div>
                     </div>
                   </div>
                 </div>
+
+                {profile ? (
+                  <ul className="p-2 w-full border-r bg-white absolute rounded bottom-16 shadow mt-12 sm:mt-16 ">
+                    <li className="flex w-full justify-between text-gray-600 hover:text-indigo-700 cursor-pointer items-center mt-2">
+                      <div className="flex items-center pb-2">
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          className="icon icon-tabler icon-tabler-logout"
+                          width={20}
+                          height={20}
+                          viewBox="0 0 24 24"
+                          strokeWidth="1.5"
+                          stroke="currentColor"
+                          fill="none"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                        >
+                          <path stroke="none" d="M0 0h24v24H0z" />
+                          <path d="M14 8v-2a2 2 0 0 0 -2 -2h-7a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h7a2 2 0 0 0 2 -2v-2" />
+                          <path d="M7 12h14l-3 -3m0 6l3 -3" />
+                        </svg>
+                        <span onClick={handleLogout} className="text-sm ml-2">
+                          Sign out
+                        </span>
+                      </div>
+                    </li>
+                  </ul>
+                ) : (
+                  ''
+                )}
               </div>
             </div>
           </div>

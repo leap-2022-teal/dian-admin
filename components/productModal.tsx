@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import AsyncSelect from 'react-select/async';
 import { fetcherPost, fetcherPostFile, fetcherPut } from '../utils/fetcher';
 
@@ -27,20 +27,20 @@ export default function ProductModal({ variant, editingProduct, handleClose, loa
   const [description, setDescription] = useState('');
   const [categoryId, setCategoryId] = useState<CategoryOption>();
 
-  if (variant === 'creating') {
+  useEffect(() => {
     setTitle('');
     setPrice(0);
     setBrand('');
     setDescription('');
-  }
+  }, [variant === 'creating']);
 
-  if (variant === 'editing') {
+  useEffect(() => {
     setTitle(editingProduct?.title);
     setPrice(editingProduct?.unitPrice);
     setBrand(editingProduct?.brand.title);
     setDescription(editingProduct?.description.short);
     setCategoryId({ value: editingProduct?.categoryId, label: editingProduct?.categoryId?.title });
-  }
+  }, [variant === 'editing']);
 
   const categoriesList = categories?.map((category: any) => {
     return { value: category._id, label: category.title };
