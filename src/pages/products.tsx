@@ -16,6 +16,7 @@ export default function Product() {
   const [limit] = useState(15);
   const [totalProducts, setTotalProducts] = useState(0);
   let { page }: any = router.query;
+  const skeleton: any = [];
 
   const indexOfLastPost = page * limit;
   const indexOfFirstPost = indexOfLastPost - limit;
@@ -96,7 +97,28 @@ export default function Product() {
     setVariant('');
     setEditingProduct('');
   }
-  console.log(products);
+
+  for (let i = 0; i < 20; i++) {
+    skeleton.push(
+      <tr className="">
+        <td>
+          <div className="h-2.5  bg-gray-300 rounded-full dark:bg-gray-600 w-32 mb-8"></div>
+        </td>
+        <td>
+          <div className="h-2.5  bg-gray-300 rounded-full dark:bg-gray-600 w-64 mb-8"></div>
+        </td>
+        <td>
+          <div className="h-2.5  bg-gray-300 rounded-full dark:bg-gray-600 w-64 mb-8"></div>
+        </td>
+        <td>
+          <div className="h-2.5  bg-gray-300 rounded-full dark:bg-gray-600 w-64 mb-8"></div>
+        </td>
+        <td>
+          <div className="h-2.5  bg-gray-300 rounded-full dark:bg-gray-600 w-32 mb-8"></div>
+        </td>
+      </tr>
+    );
+  }
 
   return (
     <Layout>
@@ -115,7 +137,7 @@ export default function Product() {
         <div className="w-fulloverflow-hidden rounded-lg shadow-xs">
           <div className="w-full overflow-x-auto">
             <table className="w-full whitespace-no-wrap">
-              <thead>
+              <thead className="">
                 <tr className="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b  bg-gray-50">
                   <th className="px-4 py-3">Products</th>
                   <th className="px-4 py-3">Price</th>
@@ -124,45 +146,13 @@ export default function Product() {
                   <th className="px-4 py-3">Actions</th>
                 </tr>
               </thead>
-              {!products ? (
-                <div role="status" className="max-w-md p-4 space-y-4 border border-gray-200 divide-y divide-gray-200 rounded shadow animate-pulse dark:divide-gray-700 md:p-6 dark:border-gray-700">
-                  <div className="flex items-center justify-between">
-                    <div>
-                      <div className="h-2.5 bg-gray-300 rounded-full dark:bg-gray-600 w-24 mb-2.5"></div>
-                      <div className="w-32 h-2 bg-gray-200 rounded-full dark:bg-gray-700"></div>
-                    </div>
-                    <div className="h-2.5 bg-gray-300 rounded-full dark:bg-gray-700 w-12"></div>
-                  </div>
-                  <div className="flex items-center justify-between pt-4">
-                    <div>
-                      <div className="h-2.5 bg-gray-300 rounded-full dark:bg-gray-600 w-24 mb-2.5"></div>
-                      <div className="w-32 h-2 bg-gray-200 rounded-full dark:bg-gray-700"></div>
-                    </div>
-                    <div className="h-2.5 bg-gray-300 rounded-full dark:bg-gray-700 w-12"></div>
-                  </div>
-                  <div className="flex items-center justify-between pt-4">
-                    <div>
-                      <div className="h-2.5 bg-gray-300 rounded-full dark:bg-gray-600 w-24 mb-2.5"></div>
-                      <div className="w-32 h-2 bg-gray-200 rounded-full dark:bg-gray-700"></div>
-                    </div>
-                    <div className="h-2.5 bg-gray-300 rounded-full dark:bg-gray-700 w-12"></div>
-                  </div>
-                  <div className="flex items-center justify-between pt-4">
-                    <div>
-                      <div className="h-2.5 bg-gray-300 rounded-full dark:bg-gray-600 w-24 mb-2.5"></div>
-                      <div className="w-32 h-2 bg-gray-200 rounded-full dark:bg-gray-700"></div>
-                    </div>
-                    <div className="h-2.5 bg-gray-300 rounded-full dark:bg-gray-700 w-12"></div>
-                  </div>
-                  <div className="flex items-center justify-between pt-4">
-                    <div>
-                      <div className="h-2.5 bg-gray-300 rounded-full dark:bg-gray-600 w-24 mb-2.5"></div>
-                      <div className="w-32 h-2 bg-gray-200 rounded-full dark:bg-gray-700"></div>
-                    </div>
-                    <div className="h-2.5 bg-gray-300 rounded-full dark:bg-gray-700 w-12"></div>
-                  </div>
-                  <span className="sr-only">Loading...</span>
-                </div>
+              {!products || products.length < 1 ? (
+                <tbody
+                  role="status"
+                  className="h-[100%] w-[100%] p-4 space-y-4 border border-gray-200 divide-y divide-gray-200 rounded shadow animate-pulse dark:divide-gray-700 md:p-6 dark:border-gray-700"
+                >
+                  {skeleton}
+                </tbody>
               ) : (
                 <tbody className="bg-white divide-y">
                   {products?.map((product: any) => (

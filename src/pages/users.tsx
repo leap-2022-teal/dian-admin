@@ -70,7 +70,7 @@ export default function User() {
               </td>
               <td className="px-4 py-3 text-sm">{user.role}</td>
 
-              <td className="px-4 py-3 text-sm">{user?.createdDate}</td>
+              <td className="px-4 py-3 text-sm">{user?.createdDate.slice(0, 10)}</td>
               <td className="px-4 py-3">
                 <div className="flex items-center space-x-4 text-sm">
                   <button
