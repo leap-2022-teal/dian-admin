@@ -27,7 +27,6 @@ export default function Product() {
   }, [loadProduct]);
 
   useEffect(() => {
-    // console.log({ page, isReady: router.isReady });
     if (router.isReady) {
       fetcherGet(`products/pagination?page=${page ?? 1}&limit=${limit}`).then((data) => {
         setProducts(data);
@@ -39,7 +38,6 @@ export default function Product() {
     fetcherGet(`products/pagination?page=${page}&limit=${limit}`).then((data) => {
       setProducts(data);
     });
-    // page = 1;
   }
 
   function previousPage() {
