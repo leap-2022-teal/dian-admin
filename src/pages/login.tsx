@@ -53,18 +53,18 @@ export default function Login() {
   }, 3000);
 
   return (
-    <div className='h-screen w-screen md:flex '>
+    <div className="h-screen w-screen md:flex ">
       <div className="flex items-center justify-center px-6 py-8 mx-auto md:my-auto max-w-[850px] w-full bg-white rounded-lg lg:shadow lg   ">
         <div className="p-4 md:space-y-6 md:flex sm:p-8 md:justify-around md:gap-4">
           <Image src={LoginImage} alt="" className="md:w-1/2" />
-          <div className='md:w-1/2'>
-            <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl ">Sign in to your account</h1>
-            <form className="space-y-4 md:space-y-6" action="#">
+          <div className="md:w-1/2">
+            <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl ">Нэвтрэх</h1>
+            <form className="space-y-4 md:space-y-6 mt-5" action="#">
               {!error ? (
                 <div>
-                  <div>
+                  <div className="mb-[1rem]">
                     <label htmlFor="email" className="block mb-2 text-sm font-medium text-gray-900 ">
-                      Your email
+                      И-мэйл хаяг
                     </label>
                     <input
                       type="email"
@@ -73,18 +73,16 @@ export default function Login() {
                       value={email}
                       onChange={(e: any) => setEmail(e.target.value)}
                       className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-purple-600 focus:border-purple-600 block w-full p-2.5 "
-                      placeholder="name@gmail.com"
                     />
                   </div>
                   <div>
                     <label htmlFor="password" className="block mb-2 text-sm font-medium text-gray-900 ">
-                      Password
+                      Нууц үг
                     </label>
                     <input
                       type="password"
                       name="password"
                       id="password"
-                      placeholder="••••••••"
                       value={password}
                       onChange={(e: any) => setPassword(e.target.value)}
                       className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-purple-600 focus:border-purple-600 block w-full p-2.5"
@@ -93,9 +91,9 @@ export default function Login() {
                 </div>
               ) : (
                 <div className="animate-shake">
-                  <div>
+                  <div className="mb-[1rem]">
                     <label htmlFor="email" className="block mb-2 text-sm font-medium text-gray-900 ">
-                      Your email
+                      И-мэйл хаяг
                     </label>
                     <input
                       type="email"
@@ -109,7 +107,7 @@ export default function Login() {
                   </div>
                   <div>
                     <label htmlFor="password" className="block mb-2 text-sm font-medium text-gray-900 ">
-                      Password
+                      Нууц үг
                     </label>
                     <input
                       type="password"
@@ -123,28 +121,12 @@ export default function Login() {
                   </div>
                 </div>
               )}
-
-              <div className="flex items-center justify-between">
-                <div className="flex items-start">
-                  <div className="flex items-center h-5">
-                    <input id="remember" aria-describedby="remember" type="checkbox" className="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-purple-300 " />
-                  </div>
-                  <div className="ml-3 text-sm">
-                    <label htmlFor="remember" className="text-gray-500 ">
-                      Remember me
-                    </label>
-                  </div>
-                </div>
-                <a href="#" className="text-sm font-medium text-purple-600 hover:underline ">
-                  Forgot password?
-                </a>
-              </div>
               <button
                 type="submit"
                 onClick={handleLogin}
                 className="w-full text-white bg-purple-600 hover:bg-purple-700 focus:ring-4 focus:outline-none focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center "
               >
-                Sign in
+                Нэвтрэх
               </button>
             </form>
           </div>
