@@ -1,13 +1,19 @@
 import Link from 'next/link';
+import { useEffect } from 'react';
 import { useContext, useState } from 'react';
 import { UserContext } from './userProvider';
 import { useRouter } from 'next/router';
 
 export default function Layout({ children }: any) {
+  const router = useRouter();
   const [show, setShow] = useState(false);
   const [profile, setProfile] = useState(false);
+  const [search, setSearch] = useState('');
+
+  useEffect(() => {
+    router.push(`/products?search=${search}`);
+  }, [search]);
   const user = useContext(UserContext);
-  const router = useRouter();
 
   function handleLogout() {
     localStorage.removeItem('loginToken');
@@ -282,7 +288,12 @@ export default function Layout({ children }: any) {
                         <line x1={21} y1={21} x2={15} y2={15} />
                       </svg>
                     </div>
-                    <input className="border border-gray-100 focus:outline-none focus:border-indigo-700 rounded w-full text-sm text-gray-500 bg-gray-100 pl-12 py-2" type="text" placeholder="Search" />
+                    <input
+                      className="border border-gray-100 focus:outline-none focus:border-indigo-700 rounded w-full text-sm text-gray-500 bg-gray-100 pl-12 py-2"
+                      type="text"
+                      placeholder="Search"
+                      onChange={(e) => setSearch(e.target.value)}
+                    />
                   </div>
                 </div>
                 <div className="w-1/2 hidden lg:flex">

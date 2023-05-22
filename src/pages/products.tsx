@@ -3,6 +3,7 @@ import { fetcherDelete, fetcherGet } from '../../utils/fetcher';
 import ProductModal from '../../components/productModal';
 import { useRouter } from 'next/router';
 import numeral from 'numeral';
+import axios from 'axios';
 import Pagination from '../../components/pagination';
 import Layout from '../../components/layout';
 
@@ -13,6 +14,17 @@ export default function Product() {
   const [variant, setVariant] = useState('');
   const [editingProduct, setEditingProduct] = useState<any>();
   const [categories, setCategories] = useState();
+  // const [search, setSearch] = useState(''); // Search filter
+
+  // useEffect(() => {
+  //   router.push(`/products?search=${search}`);
+  // }, [search]);
+
+  const { search } = router.query;
+
+  useEffect(() => {
+    axios.get(`http://localhost:8000/products?searchQuery=${search}`).then((res) => setProducts(res.data));
+  }, [search]);
   const [limit] = useState(15);
   const [totalProducts, setTotalProducts] = useState(0);
   let { page }: any = router.query;
@@ -129,6 +141,14 @@ export default function Product() {
         >
           Бүтээгдэхүүн нэмэх
         </button>
+
+        {/* <input
+          type="text"
+          placeholder="Search..."
+          onChange={(e) => {
+            setSearch(e.target.value);
+          }}
+        /> */}
 
         {variant && (
           <ProductModal categories={categories} loadCategory={loadCategory} loadProduct={loadProduct} variant={variant} editingProduct={editingProduct} handleClose={handleClose} products={products} />
