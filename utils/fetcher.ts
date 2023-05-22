@@ -4,7 +4,6 @@ export async function fetcherGet(path: string) {
   return data;
 }
 
-
 export const fetcherPost = async (path: string, data: any) => {
   const req = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/${path}`, {
     method: 'POST',
@@ -24,7 +23,7 @@ export const fetcherDelete = async (path: string) => {
       'Content-Type': 'application/json',
     },
   });
-  
+
   return req;
 };
 
@@ -36,7 +35,7 @@ export async function fetcherPut(path: string, data: any) {
       'Content-Type': 'application/json',
     },
   });
-  
+
   return req;
 }
 
@@ -44,17 +43,15 @@ export const fetcherPostFile = async (path: string, data: any) => {
   const req = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/${path}`, {
     method: 'POST',
     body: data,
-   
-  })
+  });
   const jsonData = await req.json();
-  return jsonData
+  return jsonData;
 };
 export const fetcherPutFile = async (path: string, data: any) => {
   const req = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/${path}`, {
     method: 'PUT',
     body: data,
-   
-  })
+  });
   const jsonData = await req.json();
-  return jsonData
+  return jsonData;
 };

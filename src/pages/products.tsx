@@ -3,6 +3,7 @@ import { fetcherDelete, fetcherGet } from '../../utils/fetcher';
 import ProductModal from '../../components/productModal';
 import { useRouter } from 'next/router';
 import numeral from 'numeral';
+import axios from 'axios';
 
 export default function Product(props: any) {
   const router = useRouter();
@@ -11,6 +12,19 @@ export default function Product(props: any) {
   const [variant, setVariant] = useState('');
   const [editingProduct, setEditingProduct] = useState<any>();
   const [categories, setCategories] = useState();
+  // const [search, setSearch] = useState(''); // Search filter
+
+  // useEffect(() => {
+  //   router.push(`/products?search=${search}`);
+  // }, [search]);
+
+  const { search } = router.query;
+
+  console.log(search);
+
+  useEffect(() => {
+    axios.get(`http://localhost:8000/products?searchQuery=${search}`).then((res) => setProducts(res.data));
+  }, [search]);
 
   useEffect(() => {
     fetcherGet(`products`).then((data) => setProducts(data));
@@ -74,6 +88,14 @@ export default function Product(props: any) {
         >
           Бүтээгдэхүүн нэмэх
         </button>
+
+        {/* <input
+          type="text"
+          placeholder="Search..."
+          onChange={(e) => {
+            setSearch(e.target.value);
+          }}
+        /> */}
 
         {variant && (
           <ProductModal categories={categories} loadCategory={loadCategory} loadProduct={loadProduct} variant={variant} editingProduct={editingProduct} handleClose={handleClose} products={products} />
