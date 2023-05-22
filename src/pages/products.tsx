@@ -20,8 +20,6 @@ export default function Product(props: any) {
 
   const { search } = router.query;
 
-  console.log(search);
-
   useEffect(() => {
     axios.get(`http://localhost:8000/products?searchQuery=${search}`).then((res) => setProducts(res.data));
   }, [search]);
