@@ -8,11 +8,12 @@ export default function Layout({ children }: any) {
   const router = useRouter();
   const [show, setShow] = useState(false);
   const [profile, setProfile] = useState(false);
-  const [search, setSearch] = useState('');
+  const [search, setSearch] = useState(' ');
 
-  useEffect(() => {
-    router.push(`/products?search=${search}`);
-  }, [search]);
+  function handleSearch(searchValue: string) {
+    setSearch(searchValue);
+    router.push(`/products?search=${searchValue}`);
+  }
   const user = useContext(UserContext);
 
   function handleLogout() {
@@ -292,7 +293,9 @@ export default function Layout({ children }: any) {
                       className="border border-gray-100 focus:outline-none focus:border-indigo-700 rounded w-full text-sm text-gray-500 bg-gray-100 pl-12 py-2"
                       type="text"
                       placeholder="Search"
-                      onChange={(e) => setSearch(e.target.value)}
+                      onChange={(e) => {
+                        handleSearch(e.target.value);
+                      }}
                     />
                   </div>
                 </div>

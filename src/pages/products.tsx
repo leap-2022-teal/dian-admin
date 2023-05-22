@@ -14,43 +14,48 @@ export default function Product() {
   const [variant, setVariant] = useState('');
   const [editingProduct, setEditingProduct] = useState<any>();
   const [categories, setCategories] = useState();
-  // const [search, setSearch] = useState(''); // Search filter
-
-  // useEffect(() => {
-  //   router.push(`/products?search=${search}`);
-  // }, [search]);
 
   const { search } = router.query;
+  console.log(search);
+  // useEffect(() => {
+  //   axios.get(`http://localhost:8000/products?searchQuery=${search ? search : ''}`).then((res) => setProducts(res.data));
+  // }, [search]);
 
-  useEffect(() => {
-    axios.get(`http://localhost:8000/products?searchQuery=${search}`).then((res) => setProducts(res.data));
-  }, [search]);
+  function getProduct(currentPage: number) {
+    fetcherGet(`products?page=${currentPage ?? 1}&limit=${limit}&searchQuery=${search ? search : ''}`).then((data) => {
+      setProducts(data.list);
+      setTotalProducts(data.count);
+    });
+  }
   const [limit] = useState(15);
   const [totalProducts, setTotalProducts] = useState(0);
   let { page }: any = router.query;
   const skeleton: any = [];
-
-  const indexOfLastPost = page * limit;
-  const indexOfFirstPost = indexOfLastPost - limit;
-
-  useEffect(() => {
-    fetcherGet(`products`).then((data) => {
-      setTotalProducts(data.length);
-    });
-  }, [loadProduct]);
+  const indexOfLastPost = page ? Number(page) * limit : limit;
+  const indexOfFirstPost = indexOfLastPost - limit + 1;
+  console.log(indexOfFirstPost, indexOfLastPost);
+  // useEffect(() => {
+  //   // fetcherGet(`products`).then((data) => {
+  //   fetcherGet(`products?page=${page ?? 1}&limit=${limit}&searchQuery=${search ? search : ''}`).then((data) => {
+  //     setProducts(data);
+  //   });
+  // }, [loadProduct]);
 
   useEffect(() => {
     if (router.isReady) {
-      fetcherGet(`products/pagination?page=${page ?? 1}&limit=${limit}`).then((data) => {
-        setProducts(data);
-      });
+      // fetcherGet(`products?page=${page ?? 1}&limit=${limit}&searchQuery=${search ? search : ''}`).then((data) => {
+      //   setProducts(data);
+      // });
+      getProduct(page);
     }
-  }, [page]);
+  }, [page, search, limit]);
 
   function loadProduct() {
-    fetcherGet(`products/pagination?page=${page}&limit=${limit}`).then((data) => {
-      setProducts(data);
-    });
+    // fetcherGet(`products/pagination?page=${page}&limit=${limit}`).then((data) => {
+    // fetcherGet(`products?page=${page ?? 1}&limit=${limit}&searchQuery=${search ? search : ''}`).then((data) => {
+    //   setProducts(data);
+    // });
+    getProduct(page);
   }
 
   function previousPage() {
