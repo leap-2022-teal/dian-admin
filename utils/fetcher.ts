@@ -39,6 +39,20 @@ export async function fetcherPut(path: string, data: any) {
   return req;
 }
 
+export const fetcherLogin = async (path: string, body: any) => {
+  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/${path}`, {
+    method: 'POST',
+    body: JSON.stringify(body),
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  });
+
+  const data: any = await res.json();
+
+  return data;
+};
+
 export const fetcherPostFile = async (path: string, data: any) => {
   const req = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/${path}`, {
     method: 'POST',
