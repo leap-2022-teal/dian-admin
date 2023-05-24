@@ -8,12 +8,9 @@ export default function Layout({ children }: any) {
   const router = useRouter();
   const [show, setShow] = useState(false);
   const [profile, setProfile] = useState(false);
-  const [search, setSearch] = useState('');
-
-  useEffect(() => {
-    router.push(`/products?search=${search}`);
-  }, [search]);
   const user = useContext(UserContext);
+  const [search, setSearch] = useState('');
+  const [page, setPage] = useState(1);
 
   function handleLogout() {
     localStorage.removeItem('loginToken');
@@ -24,6 +21,13 @@ export default function Layout({ children }: any) {
   } else if (user === null) {
     router.push('/login');
   }
+
+  function handleSubmit(e: any) {
+    if (e === 'Enter') {
+      router.push(`/products?search=${search}&page=${page}`);
+    }
+  }
+
   return (
     <div className="w-screen h-screen bg-gray-200">
       {user && (
@@ -293,6 +297,7 @@ export default function Layout({ children }: any) {
                       type="text"
                       placeholder="Search"
                       onChange={(e) => setSearch(e.target.value)}
+                      onKeyDown={(e) => handleSubmit(e.key)}
                     />
                   </div>
                 </div>

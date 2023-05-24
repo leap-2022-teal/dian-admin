@@ -14,6 +14,7 @@ export default function Product() {
   const [variant, setVariant] = useState('');
   const [editingProduct, setEditingProduct] = useState<any>();
   const [categories, setCategories] = useState();
+
   // const [search, setSearch] = useState(''); // Search filter
 
   // useEffect(() => {
@@ -21,34 +22,40 @@ export default function Product() {
   // }, [search]);
 
   const { search } = router.query;
-
-  useEffect(() => {
-    axios.get(`http://localhost:8000/products?searchQuery=${search}`).then((res) => setProducts(res.data));
-  }, [search]);
-  const [limit] = useState(15);
-  const [totalProducts, setTotalProducts] = useState(0);
   let { page }: any = router.query;
-  const skeleton: any = [];
-
-  const indexOfLastPost = page * limit;
-  const indexOfFirstPost = indexOfLastPost - limit;
-
-  useEffect(() => {
-    fetcherGet(`products`).then((data) => {
-      setTotalProducts(data.length);
-    });
-  }, [loadProduct]);
 
   useEffect(() => {
     if (router.isReady) {
-      fetcherGet(`products/pagination?page=${page ?? 1}&limit=${limit}`).then((data) => {
-        setProducts(data);
+      axios(`http://localhost:8000/products?searchQuery=${search ? search : ''}&page=${page ? page : ''}`).then((res) => {
+        setProducts(res.data.list);
+        setTotalProducts(res.data.count);
       });
     }
-  }, [page]);
+  }, [search, page]);
+
+  const [limit] = useState(20);
+  const [totalProducts, setTotalProducts] = useState(0);
+  const skeleton: any = [];
+
+  const indexOfLastPost = page * limit;
+  const indexOfFirstPost = indexOfLastPost - limit + 1;
+
+  // useEffect(() => {
+  //   fetcherGet(`products`).then((data) => {
+  //     setTotalProducts(data.count);
+  //   });
+  // }, [loadProduct]);
+
+  // useEffect(() => {
+  //   if (router.isReady) {
+  //     fetcherGet(`products/pagination?page=${page ?? 1}&limit=${limit}`).then((data) => {
+  //       setProducts(data);
+  //     });
+  //   }
+  // }, [page]);
 
   function loadProduct() {
-    fetcherGet(`products/pagination?page=${page}&limit=${limit}`).then((data) => {
+    fetcherGet(`products/pagination?searchQuery=${search ? search : ''}&page=${page}&limit=${limit}`).then((data) => {
       setProducts(data);
     });
   }
@@ -231,6 +238,7 @@ export default function Product() {
               previousPage={previousPage}
               nextPage={nextPage}
               currentPage={page}
+              search={search}
             />
           </div>
         </div>
