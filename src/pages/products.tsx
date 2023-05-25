@@ -20,7 +20,6 @@ export default function Product() {
   // useEffect(() => {
   //   router.push(`/products?search=${search}`);
   // }, [search]);
-
   const { search } = router.query;
   let { page }: any = router.query;
 
@@ -33,12 +32,18 @@ export default function Product() {
     }
   }, [search, page]);
 
-  const [limit] = useState(20);
+  const [limit, setLimit] = useState(20);
   const [totalProducts, setTotalProducts] = useState(0);
   const skeleton: any = [];
-
-  const indexOfLastPost = page * limit;
-  const indexOfFirstPost = indexOfLastPost - limit + 1;
+  const indexOfLastPost = page * limit < totalProducts ? page * limit : totalProducts;
+  // const indexOfFirstPost = indexOfLastPost - limit + 1 > 1 ? indexOfLastPost - limit + 1 : 1;
+  const indexOfFirstPost = page ? (page - 1) * limit + 1 : 1;
+  // const indexOfLastPost = page * limit;
+  // const indexOfFirstPost = indexOfLastPost - limit + 1;
+  console.log(page);
+  // if (limit < 20) {
+  //   setLimit(searchedLimit);
+  // }
 
   // useEffect(() => {
   //   fetcherGet(`products`).then((data) => {
@@ -57,6 +62,7 @@ export default function Product() {
   function loadProduct() {
     fetcherGet(`products/pagination?searchQuery=${search ? search : ''}&page=${page}&limit=${limit}`).then((data) => {
       setProducts(data);
+      setTotalProducts(data);
     });
   }
 
@@ -107,7 +113,6 @@ export default function Product() {
       });
     }
   }
-
   function handleClick(e: any) {
     setIsOpen(true);
   }

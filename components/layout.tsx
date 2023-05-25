@@ -60,7 +60,7 @@ export default function Layout({ children }: any) {
                 </li>
               </Link>
 
-              <Link href={'/products'}>
+              <Link href={'/products?page=1'}>
                 <li className="pl-6 cursor-pointer text-gray-600 text-sm leading-3 tracking-normal mt-4 mb-4 py-2 hover:text-indigo-700 focus:text-indigo-700 focus:outline-none">
                   <div className="flex items-center">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-6 h-6">

@@ -3,8 +3,8 @@ import { useState } from 'react';
 
 export default function Pagination({ limit, totalProducts, indexOfFirstPost, indexOfLastPost, previousPage, nextPage, currentPage, search }: any) {
   const pageNumber = [];
-  const pageCount = Math.floor(totalProducts / limit);
-
+  const pageCount = Math.ceil(totalProducts / limit);
+  console.log();
   for (let i = 1; i <= pageCount; i++) {
     pageNumber.push(i);
   }
