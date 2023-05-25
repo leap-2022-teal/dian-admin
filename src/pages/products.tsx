@@ -1,11 +1,11 @@
-import { useEffect, useState } from 'react';
-import { fetcherDelete, fetcherGet } from '../../utils/fetcher';
-import ProductModal from '../../components/productModal';
+import axios from 'axios';
 import { useRouter } from 'next/router';
 import numeral from 'numeral';
-import axios from 'axios';
-import Pagination from '../../components/pagination';
+import { useEffect, useState } from 'react';
 import Layout from '../../components/layout';
+import Pagination from '../../components/pagination';
+import ProductModal from '../../components/productModal';
+import { fetcherDelete, fetcherGet } from '../../utils/fetcher';
 
 export default function Product() {
   const router = useRouter();
@@ -87,7 +87,6 @@ export default function Product() {
   }
 
   function handleEdit(e: string) {
-    console.log(products);
     const productFilter = products.filter((product: any) => {
       if (product._id === e) {
         return product;
