@@ -47,7 +47,7 @@ export default function Layout({ children }: any) {
               </svg>
             </div>
             <ul aria-orientation="vertical" className=" py-6 h-[95vh]">
-              <Link href={'/products'}>
+              {/* <Link href={'/products'}>
                 <li className="pl-6 cursor-pointer text-gray-600 text-sm leading-3 tracking-normal pb-4 pt-5 hover:text-indigo-700 focus:text-indigo-700 focus:outline-none">
                   <div className="flex items-center">
                     <div>
@@ -62,7 +62,7 @@ export default function Layout({ children }: any) {
                     <span className="ml-2">Эхлэл</span>
                   </div>
                 </li>
-              </Link>
+              </Link> */}
 
               <Link href={'/products?page=1'}>
                 <li className="pl-6 cursor-pointer text-gray-600 text-sm leading-3 tracking-normal mt-4 mb-4 py-2 hover:text-indigo-700 focus:text-indigo-700 focus:outline-none">
