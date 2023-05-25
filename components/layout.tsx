@@ -1,6 +1,5 @@
 import Link from 'next/link';
-import { useEffect } from 'react';
-import { useContext, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { UserContext } from './userProvider';
 import { useRouter } from 'next/router';
 
@@ -8,13 +7,14 @@ export default function Layout({ children }: any) {
   const router = useRouter();
   const [show, setShow] = useState(false);
   const [profile, setProfile] = useState(false);
-  const [search, setSearch] = useState(' ');
 
   function handleSearch(searchValue: string) {
     setSearch(searchValue);
     router.push(`/products?search=${searchValue}`);
   }
   const user = useContext(UserContext);
+  const [search, setSearch] = useState('');
+  const [page, setPage] = useState(1);
 
   function handleLogout() {
     localStorage.removeItem('loginToken');
@@ -25,6 +25,13 @@ export default function Layout({ children }: any) {
   } else if (user === null) {
     router.push('/login');
   }
+
+  function handleSubmit(e: any) {
+    if (e === 'Enter') {
+      router.push(`/products?search=${search}&page=${page}`);
+    }
+  }
+
   return (
     <div className="w-screen h-screen">
       {user && (
@@ -41,6 +48,23 @@ export default function Layout({ children }: any) {
             </div>
             <ul aria-orientation="vertical" className=" py-6 h-[95vh]">
               <Link href={'/products'}>
+                <li className="pl-6 cursor-pointer text-gray-600 text-sm leading-3 tracking-normal pb-4 pt-5 hover:text-indigo-700 focus:text-indigo-700 focus:outline-none">
+                  <div className="flex items-center">
+                    <div>
+                      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-6 h-6">
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          d="M2.25 12l8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25"
+                        />
+                      </svg>
+                    </div>
+                    <span className="ml-2">Эхлэл</span>
+                  </div>
+                </li>
+              </Link>
+
+              <Link href={'/products?page=1'}>
                 <li className="pl-6 cursor-pointer text-gray-600 text-sm leading-3 tracking-normal mt-4 mb-4 py-2 hover:text-indigo-700 focus:text-indigo-700 focus:outline-none">
                   <div className="flex items-center">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-6 h-6">
@@ -276,9 +300,8 @@ export default function Layout({ children }: any) {
                       className="border border-gray-100 focus:outline-none focus:border-indigo-700 rounded w-full text-sm text-gray-500 bg-gray-100 pl-12 py-2"
                       type="text"
                       placeholder="Search"
-                      onChange={(e) => {
-                        handleSearch(e.target.value);
-                      }}
+                      onChange={(e) => setSearch(e.target.value)}
+                      onKeyDown={(e) => handleSubmit(e.key)}
                     />
                   </div>
                 </div>

@@ -1,10 +1,10 @@
 import Link from 'next/link';
 import { useState } from 'react';
 
-export default function Pagination({ limit, totalProducts, indexOfFirstPost, indexOfLastPost, previousPage, nextPage, currentPage }: any) {
+export default function Pagination({ limit, totalProducts, indexOfFirstPost, indexOfLastPost, previousPage, nextPage, currentPage, search }: any) {
   const pageNumber = [];
-  const pageCount = Math.floor(totalProducts / limit);
-
+  const pageCount = Math.ceil(totalProducts / limit);
+  console.log();
   for (let i = 1; i <= pageCount; i++) {
     pageNumber.push(i);
   }
@@ -42,7 +42,7 @@ export default function Pagination({ limit, totalProducts, indexOfFirstPost, ind
                   return (
                     <li key={page}>
                       <Link
-                        href={`products?page=${page}`}
+                        href={`products?search=${search ? search : ''}&page=${page}`}
                         className={`px-3 py-1 rounded-md focus:outline-none focus:shadow-outline-purple ${
                           Number(currentPage) === page
                             ? 'text-white transition-colors duration-150 bg-purple-600 border border-r-0 border-purple-600 rounded-md focus:outline-none focus:shadow-outline-purple'

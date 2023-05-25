@@ -1,11 +1,11 @@
-import { useEffect, useState } from 'react';
-import { fetcherDelete, fetcherGet } from '../../utils/fetcher';
-import ProductModal from '../../components/productModal';
+import axios from 'axios';
 import { useRouter } from 'next/router';
 import numeral from 'numeral';
-import axios from 'axios';
-import Pagination from '../../components/pagination';
+import { useEffect, useState } from 'react';
 import Layout from '../../components/layout';
+import Pagination from '../../components/pagination';
+import ProductModal from '../../components/productModal';
+import { fetcherDelete, fetcherGet } from '../../utils/fetcher';
 
 export default function Product() {
   const router = useRouter();
@@ -14,46 +14,55 @@ export default function Product() {
   const [editingProduct, setEditingProduct] = useState<any>();
   const [categories, setCategories] = useState();
 
-  const { search } = router.query;
-  console.log(search);
-  // useEffect(() => {
-  //   axios.get(`http://localhost:8000/products?searchQuery=${search ? search : ''}`).then((res) => setProducts(res.data));
-  // }, [search]);
+  // const [search, setSearch] = useState(''); // Search filter
 
-  function getProduct(currentPage: number) {
-    fetcherGet(`products?page=${currentPage ?? 1}&limit=${limit}&searchQuery=${search ? search : ''}`).then((data) => {
-      setProducts(data.list);
-      setTotalProducts(data.count);
-    });
-  }
-  const [limit] = useState(15);
-  const [totalProducts, setTotalProducts] = useState(0);
-  let { page }: any = router.query;
-  const skeleton: any = [];
-  const indexOfLastPost = page ? Number(page) * limit : limit;
-  const indexOfFirstPost = indexOfLastPost - limit + 1;
   // useEffect(() => {
-  //   // fetcherGet(`products`).then((data) => {
-  //   fetcherGet(`products?page=${page ?? 1}&limit=${limit}&searchQuery=${search ? search : ''}`).then((data) => {
-  //     setProducts(data);
-  //   });
-  // }, [loadProduct]);
+  //   router.push(`/products?search=${search}`);
+  // }, [search]);
+  const { search } = router.query;
+  let { page }: any = router.query;
 
   useEffect(() => {
     if (router.isReady) {
-      // fetcherGet(`products?page=${page ?? 1}&limit=${limit}&searchQuery=${search ? search : ''}`).then((data) => {
-      //   setProducts(data);
-      // });
-      getProduct(page);
+      axios(`http://localhost:8000/products?searchQuery=${search ? search : ''}&page=${page ? page : ''}`).then((res) => {
+        setProducts(res.data.list);
+        setTotalProducts(res.data.count);
+      });
     }
-  }, [page, search, limit]);
+  }, [search, page]);
+
+  const [limit, setLimit] = useState(20);
+  const [totalProducts, setTotalProducts] = useState(0);
+  const skeleton: any = [];
+  const indexOfLastPost = page * limit < totalProducts ? page * limit : totalProducts;
+  // const indexOfFirstPost = indexOfLastPost - limit + 1 > 1 ? indexOfLastPost - limit + 1 : 1;
+  const indexOfFirstPost = page ? (page - 1) * limit + 1 : 1;
+  // const indexOfLastPost = page * limit;
+  // const indexOfFirstPost = indexOfLastPost - limit + 1;
+  console.log(page);
+  // if (limit < 20) {
+  //   setLimit(searchedLimit);
+  // }
+
+  // useEffect(() => {
+  //   fetcherGet(`products`).then((data) => {
+  //     setTotalProducts(data.count);
+  //   });
+  // }, [loadProduct]);
+
+  // useEffect(() => {
+  //   if (router.isReady) {
+  //     fetcherGet(`products/pagination?page=${page ?? 1}&limit=${limit}`).then((data) => {
+  //       setProducts(data);
+  //     });
+  //   }
+  // }, [page]);
 
   function loadProduct() {
-    // fetcherGet(`products/pagination?page=${page}&limit=${limit}`).then((data) => {
-    // fetcherGet(`products?page=${page ?? 1}&limit=${limit}&searchQuery=${search ? search : ''}`).then((data) => {
-    //   setProducts(data);
-    // });
-    getProduct(page);
+    fetcherGet(`products/pagination?searchQuery=${search ? search : ''}&page=${page}&limit=${limit}`).then((data) => {
+      setProducts(data);
+      setTotalProducts(data);
+    });
   }
 
   function previousPage() {
@@ -77,7 +86,6 @@ export default function Product() {
   }
 
   function handleEdit(e: string) {
-    console.log(products);
     const productFilter = products.filter((product: any) => {
       if (product._id === e) {
         return product;
@@ -227,6 +235,7 @@ export default function Product() {
               previousPage={previousPage}
               nextPage={nextPage}
               currentPage={page}
+              search={search}
             />
           </div>
         </div>
