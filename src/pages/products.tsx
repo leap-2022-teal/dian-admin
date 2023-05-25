@@ -1,11 +1,11 @@
-import { useEffect, useState } from 'react';
-import { fetcherDelete, fetcherGet } from '../../utils/fetcher';
-import ProductModal from '../../components/productModal';
+import axios from 'axios';
 import { useRouter } from 'next/router';
 import numeral from 'numeral';
-import axios from 'axios';
-import Pagination from '../../components/pagination';
+import { useEffect, useState } from 'react';
 import Layout from '../../components/layout';
+import Pagination from '../../components/pagination';
+import ProductModal from '../../components/productModal';
+import { fetcherDelete, fetcherGet } from '../../utils/fetcher';
 
 export default function Product() {
   const router = useRouter();
@@ -23,7 +23,7 @@ export default function Product() {
   const { search } = router.query;
 
   useEffect(() => {
-    axios.get(`http://localhost:8000/products?searchQuery=${search}`).then((res) => setProducts(res.data));
+    axios.get(`http://localhost:8000/products?searchQuery=${search}`).then((res) => setProducts(res.data.list));
   }, [search]);
   const [limit] = useState(15);
   const [totalProducts, setTotalProducts] = useState(0);
@@ -74,7 +74,6 @@ export default function Product() {
   }
 
   function handleEdit(e: string) {
-    console.log(products);
     const productFilter = products.filter((product: any) => {
       if (product._id === e) {
         return product;
