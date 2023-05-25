@@ -7,6 +7,11 @@ export default function Layout({ children }: any) {
   const router = useRouter();
   const [show, setShow] = useState(false);
   const [profile, setProfile] = useState(false);
+
+  function handleSearch(searchValue: string) {
+    setSearch(searchValue);
+    router.push(`/products?search=${searchValue}`);
+  }
   const user = useContext(UserContext);
   const [search, setSearch] = useState('');
   const [page, setPage] = useState(1);
@@ -28,7 +33,7 @@ export default function Layout({ children }: any) {
   }
 
   return (
-    <div className="w-screen h-screen bg-gray-200">
+    <div className="w-screen h-screen">
       {user && (
         <div className="flex flex-no-wrap">
           {/* Sidebar starts */}
@@ -42,7 +47,7 @@ export default function Layout({ children }: any) {
               </svg>
             </div>
             <ul aria-orientation="vertical" className=" py-6 h-[95vh]">
-              <Link href={'/'}>
+              <Link href={'/products'}>
                 <li className="pl-6 cursor-pointer text-gray-600 text-sm leading-3 tracking-normal pb-4 pt-5 hover:text-indigo-700 focus:text-indigo-700 focus:outline-none">
                   <div className="flex items-center">
                     <div>

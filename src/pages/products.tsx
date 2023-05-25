@@ -9,7 +9,6 @@ import { fetcherDelete, fetcherGet } from '../../utils/fetcher';
 
 export default function Product() {
   const router = useRouter();
-  const [isOpen, setIsOpen] = useState(false);
   const [products, setProducts] = useState([]);
   const [variant, setVariant] = useState('');
   const [editingProduct, setEditingProduct] = useState<any>();
@@ -112,9 +111,6 @@ export default function Product() {
       });
     }
   }
-  function handleClick(e: any) {
-    setIsOpen(true);
-  }
 
   function handleClose() {
     setVariant('');
@@ -194,11 +190,8 @@ export default function Product() {
                             <img className="object-cover w-full h-full rounded-full" src={product.imageUrl} alt={product.title} loading="lazy" />
                             <div className="absolute inset-0 rounded-full shadow-inner" aria-hidden="true"></div>
                           </div>
-                          <p onClick={() => handleClick(product._id)} className="font-semibold">
-                            {product.title}
-                          </p>
+                          <p className="font-semibold">{product.title}</p>
                         </div>
-                        {isOpen && <div className="mt-4">{product.description.short}</div>}
                       </td>
                       <td className="px-4 py-3 text-sm">{numeral(product.unitPrice).format('0,0.00')}₮</td>
                       <td className="px-4 py-3 text-sm">{product.categoryId?.title}</td>
