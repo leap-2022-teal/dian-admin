@@ -1,6 +1,5 @@
 import Link from 'next/link';
-import { useEffect } from 'react';
-import { useContext, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { UserContext } from './userProvider';
 import { useRouter } from 'next/router';
 
