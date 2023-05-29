@@ -24,7 +24,7 @@ export default function Product() {
 
   useEffect(() => {
     if (router.isReady) {
-      axios(`http://localhost:8000/products?searchQuery=${search ? search : ''}&page=${page ? page : ''}`).then((res) => {
+      axios.get(`${process.env.NEXT_PUBLIC_API_URL}/products?searchQuery=${search ? search : ''}&page=${page ? page : ''}`).then((res) => {
         setProducts(res.data.list);
         setTotalProducts(res.data.count);
       });
@@ -39,7 +39,6 @@ export default function Product() {
   const indexOfFirstPost = page ? (page - 1) * limit + 1 : 1;
   // const indexOfLastPost = page * limit;
   // const indexOfFirstPost = indexOfLastPost - limit + 1;
-  console.log(page);
   // if (limit < 20) {
   //   setLimit(searchedLimit);
   // }
@@ -60,8 +59,8 @@ export default function Product() {
 
   function loadProduct() {
     fetcherGet(`products/pagination?searchQuery=${search ? search : ''}&page=${page}&limit=${limit}`).then((data) => {
-      setProducts(data);
-      setTotalProducts(data);
+      setProducts(data.list);
+      setTotalProducts(data.count);
     });
   }
 
